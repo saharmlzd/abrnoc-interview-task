@@ -1,8 +1,8 @@
-import { createStore } from 'vuex';
+import { createStore} from 'vuex';
 import { getProducts } from '../api/products';
 import { addToCart, getCart } from '../api/cart';
 import type { CartProduct, Product, ShoppingCartState } from '../types/cart-store';
-import type { ActionContext } from 'vuex';  // وارد کردن ActionContext از vuex
+import type { ActionContext } from 'vuex/types/index.js';
 
 export const ActionTypes = {
   FETCH_PRODUCTS: 'fetchProducts',
@@ -47,7 +47,6 @@ export default createStore<ShoppingCartState>({
   },
 
   actions: {
-    // تایپ context به ActionContext
     async [ActionTypes.FETCH_PRODUCTS]({ commit }: ActionContext<ShoppingCartState, ShoppingCartState>) {
       try {
         const products = await getProducts();
