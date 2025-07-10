@@ -1,7 +1,12 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <HelloWorld />
+  <div id="app">
+    <h1>فهرست محصولات</h1>
+    <router-view />
+  </div>
 </template>
+
+<script lang="ts">
+export default {
+  name: 'App'
+}
+</script>
