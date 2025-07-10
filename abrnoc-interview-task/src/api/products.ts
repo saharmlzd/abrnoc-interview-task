@@ -1,5 +1,5 @@
-import apiRequest from './index';
+import apiRequest from './index'
 
 export const getProducts = async () => {
-  return await apiRequest('/products');
-};
+  return await apiRequest('/products')
+}

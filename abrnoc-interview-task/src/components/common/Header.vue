@@ -11,13 +11,14 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
+import './Header.css'
 
 export default defineComponent({
-  name: 'Header',
+  name: 'AppHeader',
   setup() {
     const store = useStore()
     const cartItemCount = computed(() => store.getters.cartItemCount)
     return { cartItemCount }
-  }
+  },
 })
-</script> 
+</script>

@@ -1,7 +1,7 @@
 <template>
   <div class="quantity-controls">
     <div class="quantity-buttons">
-      <button 
+      <button
         @click="$emit('decrease')"
         class="quantity-btn quantity-btn--decrease"
         type="button"
@@ -10,7 +10,7 @@
         -
       </button>
       <span class="quantity-value">{{ quantity }}</span>
-      <button 
+      <button
         @click="$emit('increase')"
         class="quantity-btn quantity-btn--increase"
         type="button"
@@ -40,4 +40,4 @@ export default defineComponent({
   },
   emits: ['increase', 'decrease'],
 })
-</script> 
+</script>

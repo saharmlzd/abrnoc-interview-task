@@ -1,15 +1,15 @@
 export interface Product {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
+  id: string
+  name: string
+  price: number
+  quantity: number
 }
 
 export interface CartProduct extends Product {
-  cartQuantity: number;
+  cartQuantity: number
 }
 
 export interface ShoppingCartState {
-  products: Product[];
-  cart: CartProduct[];
+  products: Product[]
+  cart: CartProduct[]
 }

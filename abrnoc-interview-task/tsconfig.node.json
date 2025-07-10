@@ -13,7 +13,6 @@
     "moduleDetection": "force",
     "noEmit": true,
 
-    
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -23,9 +22,5 @@
 
     "types": ["vite/client", "node"]
   },
-  "include": [
-    "vite.config.ts",
-    "src/**/*.ts",
-    "src/**/*.d.ts"
-  ]
+  "include": ["vite.config.ts", "src/**/*.ts", "src/**/*.d.ts"]
 }

@@ -7,10 +7,10 @@
         <span class="cart-item__price-value">{{ formatPrice(item.price) }}</span>
       </div>
     </div>
-    
+
     <div class="cart-item__controls">
       <div class="cart-quantity-controls">
-        <button 
+        <button
           @click="$emit('decrease', item.id)"
           class="cart-quantity-btn cart-quantity-btn--decrease"
           type="button"
@@ -19,7 +19,7 @@
           -
         </button>
         <span class="cart-quantity">{{ item.quantity }}</span>
-        <button 
+        <button
           @click="$emit('increase', item.id)"
           class="cart-quantity-btn cart-quantity-btn--increase"
           type="button"
@@ -27,16 +27,10 @@
           +
         </button>
       </div>
-      
-      <button 
-        @click="$emit('remove', item.id)"
-        class="cart-remove-btn"
-        type="button"
-      >
-        حذف
-      </button>
+
+      <button @click="$emit('remove', item.id)" class="cart-remove-btn" type="button">حذف</button>
     </div>
-    
+
     <div class="cart-item__total">
       <span class="cart-item__total-label">مجموع:</span>
       <span class="cart-item__total-value">{{ formatPrice(item.price * item.quantity) }}</span>
@@ -46,13 +40,14 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
+import type { CartProduct } from '../types/cart-store'
 import './CartItem.css'
 
 export default defineComponent({
   name: 'CartItem',
   props: {
     item: {
-      type: Object as PropType<any>,
+      type: Object as PropType<CartProduct>,
       required: true,
     },
   },
@@ -63,6 +58,6 @@ export default defineComponent({
     }
 
     return { formatPrice }
-  }
+  },
 })
-</script> 
+</script>
