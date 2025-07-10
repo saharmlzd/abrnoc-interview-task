@@ -1,7 +1,19 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <HelloWorld />
+  <div id="app">
+    <div class="app-container">
+      <Header />
+      <router-view />
+    </div>
+  </div>
 </template>
+
+<script lang="ts">
+import Header from './components/common/Header.vue';
+
+export default {
+  name: 'App',
+  components: {
+    Header
+  }
+}
+</script>
