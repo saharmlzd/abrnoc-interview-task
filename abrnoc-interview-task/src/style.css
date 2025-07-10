@@ -1,79 +1,245 @@
+/* ==========================================================================
+   CSS Variables & Base Configuration
+   ========================================================================== */
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --font-family-primary: 'Vazirmatn', 'Tahoma', 'Arial', system-ui, Avenir, Helvetica, sans-serif;
+  --font-weight-normal: 400;
+  --font-weight-medium: 700;
+  --line-height-base: 1.5;
+  --line-height-heading: 1.1;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --color-bg-main: #fdf6ec;
+  --color-bg-card: #ffe5a9;
+  --color-primary: #2d3a4a;
+  --color-accent: #3b82f6;
+  --color-accent-hover: #2563eb;
+  --color-button-text: #fff;
+  --color-border: transparent;
 
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-xxl: 4rem;
+
+  --border-radius: 20px;
+  --transition-normal: 0.25s;
+  --container-max-width: 1400px;
+  --container-max-width-large: 1600px;
+
+  direction: rtl;
+  text-align: right;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+/* ==========================================================================
+   Light Theme Overrides
+   ========================================================================== */
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-text-primary: #213547;
+    --color-background: #ffffff;
+    --color-button-bg: #f9f9f9;
+  }
 }
-a:hover {
-  color: #535bf2;
+
+/* ==========================================================================
+   Base Elements
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-base);
+  color: var(--color-primary);
+  background: var(--color-bg-main);
+  direction: rtl;
+  text-align: right;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+h1, h2, h3 {
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-medium);
+  margin: 0;
+}
+
+/* ==========================================================================
+   Interactive Elements
+   ========================================================================== */
+
+a {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  text-decoration: inherit;
+  transition: color var(--transition-normal);
+}
+
+a:hover {
+  color: var(--color-primary-hover);
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
   padding: 0.6em 1.2em;
   font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family-primary);
+  background-color: var(--color-button-bg);
+  color: var(--color-text-primary);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: border-color var(--transition-normal);
+  min-height: 44px;
+  direction: rtl;
 }
+
 button:hover {
-  border-color: #646cff;
+  border-color: var(--color-primary);
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-.card {
-  padding: 2em;
-}
+/* ==========================================================================
+   Layout Components
+   ========================================================================== */
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
+  margin: 0;
+  padding: var(--spacing-sm);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  direction: rtl;
+  text-align: right;
+  background: var(--color-bg-main);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+.app-container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-sm);
+  direction: rtl;
+  text-align: right;
+}
+
+/* Header styles */
+.header {
+  width: 100%;
+  background: var(--color-bg-main);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) 0 var(--spacing-sm) 0;
+  margin-bottom: var(--spacing-lg);
+}
+.header__title {
+  font-size: 2.2rem;
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  color: var(--color-primary);
+  transition: color var(--transition-normal);
+}
+.header__title:hover {
+  color: var(--color-accent);
+}
+.header__cart {
+  font-size: 1.1rem;
+  background: var(--color-accent);
+  color: var(--color-button-text);
+  border-radius: 999px;
+  padding: 0.4em 1em;
+  font-weight: var(--font-weight-medium);
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  text-decoration: none;
+  transition: background var(--transition-normal);
+}
+.header__cart:hover {
+  background: var(--color-accent-hover);
+}
+
+/* Utility */
+.text-center { text-align: center; }
+
+/* Responsive breakpoints remain unchanged */
+
+/* Extra Small Devices (phones, 480px and down) */
+@media (max-width: 480px) {
+  #app {
+    padding: var(--spacing-xs);
   }
-  a:hover {
-    color: #747bff;
+  
+  .app-container {
+    padding: 0 var(--spacing-xs);
   }
-  button {
-    background-color: #f9f9f9;
+  
+  h1 {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    margin: 0 0 var(--spacing-sm) 0;
+  }
+}
+
+/* Small Devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  #app {
+    padding: var(--spacing-lg);
+  }
+  
+  .app-container {
+    padding: 0 var(--spacing-lg);
+  }
+}
+
+/* Medium Devices (desktops, 1024px and up) */
+@media (min-width: 1024px) {
+  #app {
+    padding: var(--spacing-lg) var(--spacing-xl);
+  }
+  
+  .app-container {
+    padding: 0 var(--spacing-xl);
+  }
+}
+
+/* Large Devices (large desktops, 1440px and up) */
+@media (min-width: 1440px) {
+  #app {
+    padding: var(--spacing-lg) var(--spacing-xxl);
+  }
+  
+  .app-container {
+    padding: 0 var(--spacing-xxl);
+  }
+}
+
+/* Extra Large Devices (ultra-wide screens, 1920px and up) */
+@media (min-width: 1920px) {
+  .app-container {
+    max-width: var(--container-max-width-large);
+    padding: 0 5rem;
   }
 }

@@ -1,12 +1,16 @@
 <template>
   <div id="app">
-    <h1>فهرست محصولات</h1>
-    <router-view />
+    <div class="app-container">
+      <Header />
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
+import Header from './components/Header.vue'
 export default {
-  name: 'App'
+  name: 'App',
+  components: { Header }
 }
 </script>

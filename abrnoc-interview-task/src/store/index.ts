@@ -8,6 +8,9 @@ export const ActionTypes = {
   FETCH_PRODUCTS: 'fetchProducts',
   FETCH_CART: 'fetchCart',
   ADD_TO_CART: 'addToCartAction',
+  INCREASE_QUANTITY: 'increaseQuantity',
+  DECREASE_QUANTITY: 'decreaseQuantity',
+  REMOVE_FROM_CART: 'removeFromCart',
 };
 
 export default createStore<ShoppingCartState>({
@@ -24,20 +27,23 @@ export default createStore<ShoppingCartState>({
     addToCart(state: ShoppingCartState, product: CartProduct) {
       const existingProduct = state.cart.find(item => item.id === product.id);
       if (existingProduct) {
-        existingProduct.quantity++;
+        // Check if adding one more would exceed available quantity
+        if (existingProduct.cartQuantity < product.quantity) {
+          existingProduct.cartQuantity++;
+        }
       } else {
-        state.cart.push({ ...product, quantity: 1 });
+        state.cart.push({ ...product, cartQuantity: 1 });
       }
     },
 
-    removeFromCart(state: ShoppingCartState, productId: number) {
+    removeFromCart(state: ShoppingCartState, productId: string) {
       state.cart = state.cart.filter(item => item.id !== productId);
     },
 
-    updateQuantity(state: ShoppingCartState, { productId, quantity }: { productId: number; quantity: number }) {
+    updateQuantity(state: ShoppingCartState, { productId, quantity }: { productId: string; quantity: number }) {
       const product = state.cart.find(item => item.id === productId);
       if (product) {
-        product.quantity = quantity;
+        product.cartQuantity = quantity;
       }
     },
 
@@ -65,23 +71,42 @@ export default createStore<ShoppingCartState>({
       }
     },
 
-    async [ActionTypes.ADD_TO_CART]({ commit }: ActionContext<ShoppingCartState, ShoppingCartState>, { productId, quantity }: { productId: number; quantity: number }) {
-      try {
-        const result = await addToCart(productId, quantity);
-        commit('addToCart', result);
-      } catch (error) {
-        console.error('Error adding to cart:', error);
+    async [ActionTypes.ADD_TO_CART]({ commit, state }: ActionContext<ShoppingCartState, ShoppingCartState>, { productId, quantity }: { productId: string; quantity: number }) {
+      // Find the product in the products list to get full product info
+      const product = state.products.find((item: Product) => item.id === productId);
+      if (product) {
+        commit('addToCart', { ...product, cartQuantity: quantity });
       }
+    },
+
+    async [ActionTypes.INCREASE_QUANTITY]({ commit, state }: ActionContext<ShoppingCartState, ShoppingCartState>, productId: string) {
+      const product = state.cart.find((item: CartProduct) => item.id === productId);
+      if (product && product.cartQuantity < product.quantity) {
+        commit('updateQuantity', { productId, quantity: product.cartQuantity + 1 });
+      }
+    },
+
+    async [ActionTypes.DECREASE_QUANTITY]({ commit, state }: ActionContext<ShoppingCartState, ShoppingCartState>, productId: string) {
+      const product = state.cart.find((item: CartProduct) => item.id === productId);
+      if (product && product.cartQuantity > 1) {
+        commit('updateQuantity', { productId, quantity: product.cartQuantity - 1 });
+      } else if (product && product.cartQuantity === 1) {
+        commit('removeFromCart', productId);
+      }
+    },
+
+    async [ActionTypes.REMOVE_FROM_CART]({ commit }: ActionContext<ShoppingCartState, ShoppingCartState>, productId: string) {
+      commit('removeFromCart', productId);
     },
   },
 
   getters: {
     totalCost(state: ShoppingCartState) {
-      return state.cart.reduce((total, item) => total + item.price * item.quantity, 0);
+      return state.cart.reduce((total, item) => total + item.price * item.cartQuantity, 0);
     },
 
     cartItemCount(state: ShoppingCartState) {
-      return state.cart.reduce((count, item) => count + item.quantity, 0);
+      return state.cart.reduce((count, item) => count + item.cartQuantity, 0);
     },
   },
 });
