@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
-    "server": "json-server --watch db.json --port 5000"
+    "server": "json-server --watch db.json --port 5000",
+    "lint": "eslint --ext .js,.ts,.vue src",
+    "lint:fix": "eslint --ext .js,.ts,.vue src --fix",
+    "prettier": "prettier --write .",
+    "format": "npm run lint:fix && npm run prettier"
   },
   "dependencies": {
     "vue": "^3.5.17",
@@ -15,13 +19,19 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vue/tsconfig": "^0.7.0",
+    "eslint": "^9.30.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-vue": "^10.3.0",
     "jest": "^30.0.4",
     "json-server": "^1.0.0-beta.3",
+    "prettier": "^3.6.2",
     "ts-jest": "^29.4.0",
     "typescript": "~5.8.3",
     "vite": "^7.0.4",
+    "vue-eslint-parser": "^10.2.0",
     "vue-tsc": "^2.2.12"
   }
 }
