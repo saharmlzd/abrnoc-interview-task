@@ -26,6 +26,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useRouter } from 'vue-router'
 import ProductCard from '../../features/products/ProductCard.vue'
 import { useCart } from '../../../hooks/useCart'
 import { useThrottle } from '../../../hooks/useThrottle'
@@ -38,32 +39,31 @@ export default defineComponent({
     ProductCard,
   },
   setup() {
-    const { 
-      cart: cartItems, 
-      totalCost, 
-      increaseQuantity, 
-      decreaseQuantity, 
-      removeFromCart, 
-      clearCart 
+    const router = useRouter()
+    const {
+      cart: cartItems,
+      totalCost,
+      increaseQuantity,
+      decreaseQuantity,
+      removeFromCart,
     } = useCart()
 
     const { createThrottledFunction } = useThrottle(2000) // 2 second throttle
 
     const handleCheckout = () => {
-      alert('سفارش شما با موفقیت ثبت شد!')
-      clearCart()
+      router.push('/payment')
     }
 
     const checkout = createThrottledFunction(handleCheckout)
 
-    return { 
-      cartItems, 
-      totalCost, 
-      formatPrice, 
-      increaseQuantity, 
-      decreaseQuantity, 
-      removeFromCart, 
-      checkout 
+    return {
+      cartItems,
+      totalCost,
+      formatPrice,
+      increaseQuantity,
+      decreaseQuantity,
+      removeFromCart,
+      checkout,
     }
   },
 })

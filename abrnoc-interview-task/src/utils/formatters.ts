@@ -14,4 +14,4 @@ export const formatPrice = (price: number): string => {
  */
 export const formatNumber = (value: number): string => {
   return value.toLocaleString('fa-IR')
-} 
+}

@@ -35,4 +35,4 @@ export const canIncreaseQuantity = (cartItem: CartProduct, maxQuantity: number):
  */
 export const canDecreaseQuantity = (cartItem: CartProduct): boolean => {
   return cartItem.cartQuantity > 1
-} 
+}

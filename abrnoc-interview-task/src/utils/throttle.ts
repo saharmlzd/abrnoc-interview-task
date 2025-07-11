@@ -4,7 +4,7 @@
  * @param delay - The delay in milliseconds
  * @returns Throttled function
  */
-export const throttle = <T extends (...args: any[]) => any>(
+export const throttle = <T extends (...args: unknown[]) => unknown>(
   func: T,
   delay: number
 ): ((...args: Parameters<T>) => void) => {
@@ -21,11 +21,14 @@ export const throttle = <T extends (...args: any[]) => any>(
       if (timeoutId) {
         clearTimeout(timeoutId)
       }
-      
-      timeoutId = setTimeout(() => {
-        lastCall = Date.now()
-        func(...args)
-      }, delay - (now - lastCall))
+
+      timeoutId = setTimeout(
+        () => {
+          lastCall = Date.now()
+          func(...args)
+        },
+        delay - (now - lastCall)
+      )
     }
   }
-} 
+}

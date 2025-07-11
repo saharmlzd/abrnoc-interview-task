@@ -1,19 +1,23 @@
 <template>
   <div id="app">
-    <div class="app-container">
-      <Header />
-      <router-view />
-    </div>
+    <ErrorBoundary>
+      <div class="app-container">
+        <Header />
+        <router-view />
+      </div>
+    </ErrorBoundary>
   </div>
 </template>
 
 <script lang="ts">
-import Header from './components/common/Header.vue';
+import Header from './components/common/Header.vue'
+import ErrorBoundary from './components/common/ErrorBoundary.vue'
 
 export default {
   name: 'App',
   components: {
-    Header
-  }
+    Header,
+    ErrorBoundary,
+  },
 }
 </script>

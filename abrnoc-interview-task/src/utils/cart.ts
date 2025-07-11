@@ -35,4 +35,4 @@ export const calculateCartItemCount = (cart: CartProduct[]): number => {
  */
 export const isCartEmpty = (cart: CartProduct[]): boolean => {
   return cart.length === 0
-} 
+}

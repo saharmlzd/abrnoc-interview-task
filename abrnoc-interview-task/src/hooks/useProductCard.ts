@@ -4,7 +4,7 @@ import { canAddToCart, canIncreaseQuantity } from '../utils/validation'
 import type { Product, CartProduct } from '../types/cart-store'
 
 export const useProductCard = (
-  product: Product, 
+  product: Product,
   findCartItemById: (id: string) => CartProduct | undefined
 ) => {
   const formattedPrice = computed(() => {
@@ -30,4 +30,4 @@ export const useProductCard = (
     canAdd,
     canIncrease,
   }
-} 
+}

@@ -12,4 +12,4 @@ describe('formatters', () => {
     expect(formatNumber(0)).toBe('۰')
     expect(formatNumber(42)).toBe('۴۲')
   })
-}) 
+})

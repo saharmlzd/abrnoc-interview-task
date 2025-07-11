@@ -68,22 +68,20 @@ export default createStore<ShoppingCartState>({
       commit,
     }: ActionContext<ShoppingCartState, ShoppingCartState>) {
       const productsQuery = useProductsQuery()
-      
+
       const products = await productsQuery.fetchProducts({
         onSuccess: (data) => {
           commit('setProducts', data)
         },
         onError: (error) => {
           commit('setError', error)
-        }
+        },
       })
-      
+
       if (products) {
         commit('setProducts', products)
       }
     },
-
-
 
     async [ActionTypes.ADD_TO_CART](
       { commit, state }: ActionContext<ShoppingCartState, ShoppingCartState>,
