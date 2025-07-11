@@ -12,10 +12,10 @@ interface HeaderConfig {
 
 export function useHeaderConfig() {
   const route = useRoute()
-  
+
   const headerConfig = computed<HeaderConfig>(() => {
     const path = route.path
-    
+
     // Define header behavior for different routes
     const configs: Record<string, HeaderConfig> = {
       '/': {
@@ -24,7 +24,7 @@ export function useHeaderConfig() {
         showTitle: true,
         showCart: true,
         title: 'ابرناک',
-        titleClickable: true
+        titleClickable: true,
       },
       '/payment': {
         show: false,
@@ -32,7 +32,7 @@ export function useHeaderConfig() {
         showTitle: false,
         showCart: false,
         title: '',
-        titleClickable: false
+        titleClickable: false,
       },
       '/cart': {
         show: true,
@@ -40,10 +40,10 @@ export function useHeaderConfig() {
         showTitle: true,
         showCart: false,
         title: 'سبد خرید',
-        titleClickable: false
-      }
+        titleClickable: false,
+      },
     }
-    
+
     // Default configuration for unknown routes
     const defaultConfig: HeaderConfig = {
       show: true,
@@ -51,13 +51,13 @@ export function useHeaderConfig() {
       showTitle: true,
       showCart: true,
       title: 'ابرناک',
-      titleClickable: false
+      titleClickable: false,
     }
-    
+
     return configs[path] || defaultConfig
   })
-  
+
   return {
-    headerConfig
+    headerConfig,
   }
-} 
+}

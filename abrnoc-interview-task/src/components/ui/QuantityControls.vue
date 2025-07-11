@@ -42,6 +42,6 @@ export default defineComponent({
   emits: ['increase', 'decrease'],
   setup() {
     return { toPersianDigits }
-  }
+  },
 })
 </script>

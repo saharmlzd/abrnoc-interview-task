@@ -2,9 +2,7 @@
  * Converts all Western digits in a string to Persian digits
  */
 export const toPersianDigits = (input: string | number): string => {
-  return String(input).replace(/\d/g, d =>
-    String.fromCharCode(d.charCodeAt(0) + 1728)
-  )
+  return String(input).replace(/\d/g, (d) => String.fromCharCode(d.charCodeAt(0) + 1728))
 }
 
 /**

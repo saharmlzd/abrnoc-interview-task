@@ -8,11 +8,7 @@
     >
       پرداخت
     </button>
-    <router-link
-      v-if="showContinueShopping"
-      to="/"
-      class="continue-shopping-btn"
-    >
+    <router-link v-if="showContinueShopping" to="/" class="continue-shopping-btn">
       ادامه خرید
     </router-link>
   </div>
@@ -69,7 +65,7 @@ export default defineComponent({
   cursor: pointer;
   transition: background 0.2s;
   min-width: 180px;
-  box-shadow: 0 2px 8px rgba(5,150,105,0.08);
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.08);
 }
 
 @media (max-width: 768px) {
@@ -94,7 +90,9 @@ export default defineComponent({
   font-weight: 600;
   text-align: center;
   text-decoration: none;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
   min-width: 110px;
   padding: 1rem 1.5rem;
 }
@@ -112,4 +110,4 @@ export default defineComponent({
   background: #3b82f6;
   color: white;
 }
-</style> 
+</style>

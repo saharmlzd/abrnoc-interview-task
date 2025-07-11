@@ -20,8 +20,6 @@
   padding: 1rem 2rem;
 }
 
-
-
 .header__left {
   display: flex;
   align-items: center;
@@ -134,7 +132,7 @@
 
 .header__cart-badge {
   position: absolute;
-  top: -8px;
+  top: -2px;
   right: -10px;
   background: #ef4444;
   color: white;
@@ -194,24 +192,24 @@
   .header__container {
     padding: 0.75rem 1rem;
   }
-  
+
   .header__title {
     font-size: 1.1rem;
   }
-  
+
   .header__logo-img {
     width: 20px;
     height: 20px;
   }
-  
+
   .header__cart {
     padding: 0.5rem 1rem;
   }
-  
+
   .header__cart-text {
     display: none;
   }
-  
+
   .header__cart-icon svg {
     width: 18px;
     height: 18px;

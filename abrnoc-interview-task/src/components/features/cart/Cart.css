@@ -518,21 +518,21 @@
     padding: 2rem 1.5rem;
     border-radius: 20px;
   }
-  
+
   .order-summary-bar__content {
     gap: 1.75rem;
     padding: 0 0.75rem;
   }
-  
+
   .order-summary-bar__row {
     font-size: 1.15rem;
   }
-  
+
   .order-summary-bar__row--total {
     font-size: 1.35rem;
     padding: 1.25rem 1rem;
   }
-  
+
   .order-summary-bar__total {
     font-size: 1.5rem;
   }
@@ -544,16 +544,16 @@
     border-radius: 16px 16px 0 0;
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
   }
-  
+
   .cart-container {
     padding-bottom: 140px; /* Reduced space for smaller summary bar */
   }
-  
+
   .order-summary-bar__content {
     gap: 0.75rem;
     padding: 0 0.5rem;
   }
-  
+
   .order-summary-bar__row {
     font-size: 1rem;
     flex-direction: column;
@@ -562,7 +562,7 @@
     gap: 0.5rem;
     font-weight: 600;
   }
-  
+
   .order-summary-bar__row--total {
     font-size: 1.1rem;
     flex-direction: column;
@@ -572,7 +572,7 @@
     margin: 0.5rem -0.25rem 0;
     gap: 0.75rem;
   }
-  
+
   .order-summary-bar__total {
     font-size: 1.25rem;
   }
@@ -583,33 +583,31 @@
     padding: 0.75rem 0.5rem;
     border-radius: 12px 12px 0 0;
   }
-  
+
   .cart-container {
     padding-bottom: 120px; /* Much less space on small mobile */
   }
-  
+
   .order-summary-bar__content {
     gap: 0.5rem;
     padding: 0 0.25rem;
   }
-  
+
   .order-summary-bar__row {
     font-size: 1rem;
     font-weight: 600;
   }
-  
+
   .order-summary-bar__row--total {
     font-size: 1rem;
     padding: 0.75rem 0.5rem;
     margin: 0.25rem -0.25rem 0;
   }
-  
+
   .order-summary-bar__total {
     font-size: 1.1rem;
   }
 }
-
-
 
 /* Responsive Design */
 @media (max-width: 1024px) {
@@ -617,7 +615,7 @@
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
+
   .order-summary {
     position: static;
     order: -1;
@@ -628,39 +626,39 @@
   .cart-page {
     padding: 1rem 0.5rem;
   }
-  
+
   .cart-page-header {
     flex-direction: column;
     gap: 1rem;
     text-align: center;
     padding: 1rem;
   }
-  
+
   .cart-page-title {
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .cart-page-title h1 {
     font-size: 1.75rem;
   }
-  
+
   .cart-item-main {
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .cart-item-actions {
     width: 100%;
     justify-content: space-between;
   }
-  
+
   .cart-items-header {
     flex-direction: column;
     gap: 0.5rem;
     text-align: center;
   }
-  
+
   .summary-actions {
     flex-direction: column;
   }
@@ -670,28 +668,28 @@
   .cart-page {
     padding: 0.5rem;
   }
-  
+
   .cart-container {
     gap: 1rem;
   }
-  
+
   .cart-item {
     padding: 1rem;
   }
-  
+
   .order-summary {
     padding: 1rem;
   }
-  
+
   .empty-cart {
     padding: 2rem 1rem;
   }
-  
+
   .empty-cart-icon {
     width: 80px;
     height: 80px;
   }
-  
+
   .empty-cart h2 {
     font-size: 1.5rem;
   }
