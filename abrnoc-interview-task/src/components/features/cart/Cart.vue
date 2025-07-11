@@ -30,6 +30,7 @@ import { useStore } from 'vuex'
 import ProductCard from '../../features/products/ProductCard.vue'
 import { ActionTypes } from '../../../store'
 import type { CartProduct } from '../../../types/cart-store'
+import { formatPrice } from '../../../utils/formatters'
 import './Cart.css'
 
 
@@ -42,7 +43,7 @@ export default defineComponent({
     const store = useStore()
     const cartItems = computed(() => store.state.cart)
     const totalCost = computed(() => store.getters.totalCost)
-    const formatPrice = (price: number) => price.toLocaleString('fa-IR')
+
     const increaseQuantity = (productId: string) => 
       store.dispatch(ActionTypes.INCREASE_QUANTITY, productId)
     const decreaseQuantity = (productId: string) => 

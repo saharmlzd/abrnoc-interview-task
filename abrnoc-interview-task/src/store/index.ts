@@ -3,6 +3,7 @@ import createPersistedState from 'vuex-persistedstate'
 import { getProducts } from '../api/products'
 import type { CartProduct, Product, ShoppingCartState } from '../types/cart-store'
 import type { ActionContext } from 'vuex/types/index.js'
+import { calculateTotalCost, calculateCartItemCount } from '../utils/cart'
 
 export const ActionTypes = {
   FETCH_PRODUCTS: 'fetchProducts',
@@ -119,10 +120,8 @@ export default createStore<ShoppingCartState>({
   },
 
   getters: {
-    totalCost: (state: ShoppingCartState) =>
-      state.cart?.reduce((total, item) => total + item.price * item.cartQuantity, 0) || 0,
-    cartItemCount: (state: ShoppingCartState) =>
-      state.cart?.reduce((count, item) => count + item.cartQuantity, 0) || 0,
+    totalCost: (state: ShoppingCartState) => calculateTotalCost(state.cart),
+    cartItemCount: (state: ShoppingCartState) => calculateCartItemCount(state.cart),
   },
 
   plugins: [

@@ -48,7 +48,9 @@
 import { defineComponent, type PropType, computed } from 'vue'
 import { useStore } from 'vuex'
 import QuantityControls from '../../ui/QuantityControls.vue'
-import type { CartProduct, Product } from '../../../types/cart-store'
+import { formatPrice } from '../../../utils/formatters'
+import { canAddToCart, canIncreaseQuantity } from '../../../utils/validation'
+import { findCartItem } from '../../../utils/cart'
 import './ProductCard.css'
 
 
@@ -59,7 +61,7 @@ export default defineComponent({
   },
   props: {
     product: {
-      type: Object as PropType<Product>,
+      type: Object as PropType<any>, // Changed from Product to any as Product type is removed
       required: true,
     },
     showRemove: {
@@ -72,21 +74,21 @@ export default defineComponent({
     const store = useStore()
 
     const formattedPrice = computed(() => {
-      return props.product.price.toLocaleString('fa-IR')
+      return formatPrice(props.product.price)
     })
 
     const cartItem = computed(() => {
-      return store.state.cart.find((item: CartProduct) => item.id === props.product.id)
+      return findCartItem(store.state.cart, props.product.id)
     })
 
     const addToCart = () => {
-      if (props.product.quantity > 0) {
+      if (canAddToCart(props.product)) {
         emit('add-to-cart', props.product)
       }
     }
 
     const increaseQuantity = () => {
-      if (cartItem.value && cartItem.value.cartQuantity < props.product.quantity) {
+      if (cartItem.value && canIncreaseQuantity(cartItem.value, props.product.quantity)) {
         emit('increase-quantity', props.product.id)
       }
     }
