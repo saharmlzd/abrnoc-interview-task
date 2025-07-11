@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-import { getProducts } from '../api/products'
+import { useProductsQuery } from '../api/products'
 import type { CartProduct, Product, ShoppingCartState } from '../types/cart-store'
 import type { ActionContext } from 'vuex/types/index.js'
 import { calculateTotalCost, calculateCartItemCount } from '../utils/cart'
@@ -67,15 +67,19 @@ export default createStore<ShoppingCartState>({
     async [ActionTypes.FETCH_PRODUCTS]({
       commit,
     }: ActionContext<ShoppingCartState, ShoppingCartState>) {
-      try {
-        commit('setLoading', true)
-        commit('setError', null)
-        const products = await getProducts()
+      const productsQuery = useProductsQuery()
+      
+      const products = await productsQuery.fetchProducts({
+        onSuccess: (data) => {
+          commit('setProducts', data)
+        },
+        onError: (error) => {
+          commit('setError', error)
+        }
+      })
+      
+      if (products) {
         commit('setProducts', products)
-      } catch {
-        commit('setError', 'خطا در بارگذاری محصولات')
-      } finally {
-        commit('setLoading', false)
       }
     },
 

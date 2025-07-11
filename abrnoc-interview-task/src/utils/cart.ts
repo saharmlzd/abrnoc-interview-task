@@ -1,4 +1,4 @@
-import type { CartProduct, Product } from '../types/cart-store'
+import type { CartProduct } from '../types/cart-store'
 
 /**
  * Finds a cart item by product ID

@@ -9,15 +9,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { useStore } from 'vuex'
+import { defineComponent } from 'vue'
+import { useCart } from '../../hooks/useCart'
 import './Header.css'
 
 export default defineComponent({
   name: 'AppHeader',
   setup() {
-    const store = useStore()
-    const cartItemCount = computed(() => store.getters.cartItemCount)
+    const { cartItemCount } = useCart()
     return { cartItemCount }
   },
 })

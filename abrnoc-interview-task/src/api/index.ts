@@ -11,3 +11,8 @@ const apiRequest = async (url: string, options: RequestInit = {}) => {
 }
 
 export default apiRequest
+
+// Export hooks
+export { useBaseQuery } from './useBaseQuery'
+export { useProductsQuery } from './products'
+export { useCartQuery } from './cart'

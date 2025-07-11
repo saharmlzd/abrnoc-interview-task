@@ -41,18 +41,27 @@
     >
       {{ product.quantity > 0 ? 'افزودن به سبد خرید' : 'ناموجود' }}
     </button>
+
+    <!-- Show remove from list button if showRemoveFromList is true -->
+    <button
+      v-if="showRemoveFromList"
+      @click="removeFromList"
+      class="product-card__remove-btn"
+      type="button"
+    >
+      حذف از لیست
+    </button>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, type PropType, computed } from 'vue'
-import { useStore } from 'vuex'
+import { defineComponent, type PropType } from 'vue'
 import QuantityControls from '../../ui/QuantityControls.vue'
-import { formatPrice } from '../../../utils/formatters'
-import { canAddToCart, canIncreaseQuantity } from '../../../utils/validation'
-import { findCartItem } from '../../../utils/cart'
+import { useCart } from '../../../hooks/useCart'
+import { useProductCard } from '../../../hooks/useProductCard'
+import { useThrottle } from '../../../hooks/useThrottle'
+import type { Product } from '../../../types/cart-store'
 import './ProductCard.css'
-
 
 export default defineComponent({
   name: 'ProductCard',
@@ -61,45 +70,56 @@ export default defineComponent({
   },
   props: {
     product: {
-      type: Object as PropType<any>, // Changed from Product to any as Product type is removed
+      type: Object as PropType<Product>,
       required: true,
     },
     showRemove: {
       type: Boolean,
       default: false,
     },
+    showRemoveFromList: {
+      type: Boolean,
+      default: false,
+    },
   },
-  emits: ['add-to-cart', 'increase-quantity', 'decrease-quantity', 'remove'],
+  emits: ['add-to-cart', 'increase-quantity', 'decrease-quantity', 'remove', 'remove-from-list'],
   setup(props, { emit }) {
-    const store = useStore()
+    const { findCartItemById } = useCart()
+    const { formattedPrice, cartItem, canAdd, canIncrease } = useProductCard(
+      props.product, 
+      findCartItemById
+    )
+    const { createThrottledFunction } = useThrottle(500) // 500ms throttle
 
-    const formattedPrice = computed(() => {
-      return formatPrice(props.product.price)
-    })
-
-    const cartItem = computed(() => {
-      return findCartItem(store.state.cart, props.product.id)
-    })
-
-    const addToCart = () => {
-      if (canAddToCart(props.product)) {
+    const handleAddToCart = () => {
+      if (canAdd.value) {
         emit('add-to-cart', props.product)
       }
     }
 
-    const increaseQuantity = () => {
-      if (cartItem.value && canIncreaseQuantity(cartItem.value, props.product.quantity)) {
+    const handleIncreaseQuantity = () => {
+      if (canIncrease.value) {
         emit('increase-quantity', props.product.id)
       }
     }
 
-    const decreaseQuantity = () => {
+    const handleDecreaseQuantity = () => {
       emit('decrease-quantity', props.product.id)
     }
 
-    const removeFromCart = () => {
+    const handleRemoveFromCart = () => {
       emit('remove', props.product.id)
     }
+
+    const handleRemoveFromList = () => {
+      emit('remove-from-list', props.product.id)
+    }
+
+    const addToCart = createThrottledFunction(handleAddToCart)
+    const increaseQuantity = createThrottledFunction(handleIncreaseQuantity)
+    const decreaseQuantity = createThrottledFunction(handleDecreaseQuantity)
+    const removeFromCart = createThrottledFunction(handleRemoveFromCart)
+    const removeFromList = createThrottledFunction(handleRemoveFromList)
 
     return {
       formattedPrice,
@@ -108,6 +128,7 @@ export default defineComponent({
       increaseQuantity,
       decreaseQuantity,
       removeFromCart,
+      removeFromList,
     }
   },
 })

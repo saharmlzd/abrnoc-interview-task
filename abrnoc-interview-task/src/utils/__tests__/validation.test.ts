@@ -1,4 +1,9 @@
-import { isProductAvailable, canAddToCart, canIncreaseQuantity, canDecreaseQuantity } from '../validation'
+import { 
+  isProductAvailable, 
+  canAddToCart, 
+  canIncreaseQuantity, 
+  canDecreaseQuantity 
+} from '../validation'
 import type { Product, CartProduct } from '../../types/cart-store'
 
 describe('validation utils', () => {
