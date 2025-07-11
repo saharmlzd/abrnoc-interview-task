@@ -32,9 +32,23 @@
           <span class="header__title">{{ headerConfig.title }}</span>
           <img src="/src/assets/abrnoc.svg" alt="ابرناک" class="header__logo-img" />
         </div>
+        
+
       </div>
       
       <div class="header__right">
+        <!-- Title with cart badge for cart page -->
+        <div 
+          v-if="headerConfig.showTitle && headerConfig.showBackButton && $route.path === '/cart'" 
+          class="header__title-container"
+        >
+          <span class="header__title">{{ headerConfig.title }}</span>
+          <div class="header__cart-badge-inline">
+            <span class="header__cart-badge-number">{{ toPersianDigits(cartItemCount) }}</span>
+            <span class="header__cart-badge-text">محصول</span>
+          </div>
+        </div>
+        
         <router-link v-if="headerConfig.showCart" to="/cart" class="header__cart">
           <div class="header__cart-icon">
             <svg viewBox="0 0 24 24" fill="currentColor">

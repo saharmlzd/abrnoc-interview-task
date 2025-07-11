@@ -20,6 +20,8 @@
   padding: 1rem 2rem;
 }
 
+
+
 .header__left {
   display: flex;
   align-items: center;
@@ -152,6 +154,27 @@
   font-size: 0.875rem;
   font-weight: 600;
   color: #475569;
+}
+
+.header__cart-badge-inline {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-right: 0.5rem;
+  background: #ef4444;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.header__cart-badge-number {
+  font-weight: 700;
+}
+
+.header__cart-badge-text {
+  font-size: 0.7rem;
 }
 
 .header,

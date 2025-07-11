@@ -1,16 +1,6 @@
 <template>
   <div class="cart-page">
     <div class="cart-container">
-      <div class="cart-page-header">
-        <div class="cart-page-title">
-          <h1>سبد خرید</h1>
-          <div class="cart-badge">
-            <span class="cart-badge-number">{{ toPersianDigits(cartItems.length) }}</span>
-            <span class="cart-badge-text">محصول</span>
-          </div>
-        </div>
-       
-      </div>
 
       <div v-if="cartItems.length === 0" class="empty-cart">
         <div class="empty-cart-icon">
@@ -23,7 +13,7 @@
         <router-link to="/" class="shop-now-btn">
           <span>شروع خرید</span>
           <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/>
+            <path d="M12 20l1.41-1.41L7.83 13H20v-2H7.83l5.58-5.59L12 4l-8 8z"/>
           </svg>
         </router-link>
       </div>

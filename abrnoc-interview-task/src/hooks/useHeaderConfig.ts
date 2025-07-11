@@ -39,7 +39,7 @@ export function useHeaderConfig() {
         showBackButton: true,
         showTitle: true,
         showCart: false,
-        title: 'ابرناک',
+        title: 'سبد خرید',
         titleClickable: false
       }
     }

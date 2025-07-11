@@ -46,10 +46,16 @@ export default defineComponent({
   display: flex;
   flex-direction: row;
   gap: 1rem;
+  justify-content: center;
+  align-items: center;
 }
-@media (max-width: 600px) {
+
+@media (max-width: 768px) {
   .action-buttons {
-    flex-direction: column;
+    flex-direction: row;
+    gap: 0.75rem;
+    justify-content: center;
+    width: 100%;
   }
 }
 .checkout-btn {
@@ -57,8 +63,6 @@ export default defineComponent({
   color: white;
   border: none;
   border-radius: 8px;
-    padding: 0.85rem 1.2rem;
-
   padding: 1.2rem 2.2rem;
   font-size: 1.15rem;
   font-weight: 700;
@@ -66,6 +70,16 @@ export default defineComponent({
   transition: background 0.2s;
   min-width: 180px;
   box-shadow: 0 2px 8px rgba(5,150,105,0.08);
+}
+
+@media (max-width: 768px) {
+  .checkout-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    min-width: 120px;
+    border-radius: 6px;
+  }
 }
 .checkout-btn:disabled {
   background: #cbd5e1;
@@ -82,6 +96,17 @@ export default defineComponent({
   text-decoration: none;
   transition: background 0.2s, color 0.2s;
   min-width: 110px;
+  padding: 1rem 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .continue-shopping-btn {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    min-width: 100px;
+    border-radius: 6px;
+  }
 }
 .continue-shopping-btn:hover {
   background: #3b82f6;
