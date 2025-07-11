@@ -38,12 +38,12 @@ export const useBaseQuery = () => {
       const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred'
       error.value = errorMessage
       options.onError?.(errorMessage)
-      
+
       // Handle global error for network/API failures
       if (err instanceof Error) {
         handleGlobalError(err, 'api-query')
       }
-      
+
       return null
     } finally {
       loading.value = false
@@ -74,4 +74,4 @@ export const useBaseQuery = () => {
     clearData,
     reset,
   }
-} 
+}

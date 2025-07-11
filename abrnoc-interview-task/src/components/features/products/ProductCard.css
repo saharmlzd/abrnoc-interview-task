@@ -4,7 +4,7 @@
   align-items: center;
   width: 100%;
   max-width: 320px;
-  background: var(--color-bg-card);
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   padding: var(--spacing-lg) var(--spacing-md);
   border-radius: var(--border-radius);
   box-shadow: 0 4px 16px rgba(44, 62, 80, 0.08);
@@ -123,4 +123,4 @@
     max-width: 100%;
     padding: var(--spacing-md) var(--spacing-xs);
   }
-} 
+}

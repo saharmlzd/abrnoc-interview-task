@@ -1,6 +1,7 @@
 # Coding Standards & Best Practices
 
 ## Table of Contents
+
 1. [General Principles](#general-principles)
 2. [CSS Standards](#css-standards)
 3. [Vue.js Standards](#vuejs-standards)
@@ -13,12 +14,14 @@
 ## General Principles
 
 ### 1. Clean Code Rules
+
 - **Single Responsibility**: Each function/component should do one thing well
 - **DRY (Don't Repeat Yourself)**: Avoid code duplication
 - **KISS (Keep It Simple, Stupid)**: Prefer simple solutions over complex ones
 - **Consistency**: Follow established patterns throughout the project
 
 ### 2. Code Organization
+
 - **Logical Grouping**: Group related code together
 - **Clear Separation**: Separate concerns (HTML, CSS, JS)
 - **Modular Design**: Break large components into smaller, reusable pieces
@@ -26,6 +29,7 @@
 ## CSS Standards
 
 ### 1. CSS Architecture
+
 ```css
 /* ==========================================================================
    Section Name
@@ -46,11 +50,13 @@
 ```
 
 ### 2. CSS Variables (Custom Properties)
+
 - **Use CSS variables** for consistent theming
 - **Group variables** by purpose (colors, spacing, typography)
 - **Prefix variables** appropriately (`--color-`, `--spacing-`, `--font-`)
 
 ### 3. Responsive Design Rules
+
 ```css
 /* Mobile-first approach */
 .component {
@@ -73,6 +79,7 @@
 ```
 
 ### 4. RTL Support
+
 - **Always include RTL properties** for Persian language
 - **Use logical properties** where possible
 - **Test both LTR and RTL layouts**
@@ -80,6 +87,7 @@
 ## Vue.js Standards
 
 ### 1. Component Structure
+
 ```vue
 <template>
   <!-- Template content -->
@@ -101,7 +109,7 @@ export default defineComponent({
     return {
       // Return reactive data and methods
     }
-  }
+  },
 })
 </script>
 
@@ -111,6 +119,7 @@ export default defineComponent({
 ```
 
 ### 2. Naming Conventions
+
 - **Components**: PascalCase (`ProductCard.vue`)
 - **Files**: kebab-case (`product-card.vue`)
 - **Methods**: camelCase (`addToCart`)
@@ -118,6 +127,7 @@ export default defineComponent({
 - **Events**: kebab-case (`add-to-cart`)
 
 ### 3. Props Validation
+
 ```typescript
 props: {
   product: {
@@ -133,11 +143,13 @@ props: {
 ## TypeScript Standards
 
 ### 1. Type Definitions
+
 - **Create interfaces** for all data structures
 - **Use strict typing** for function parameters and return values
 - **Avoid `any` type** unless absolutely necessary
 
 ### 2. Import/Export Rules
+
 ```typescript
 // Group imports by type
 import { defineComponent, computed } from 'vue' // Vue imports
@@ -146,6 +158,7 @@ import ProductCard from './ProductCard.vue' // Component imports
 ```
 
 ### 3. Error Handling
+
 - **Use try-catch blocks** for async operations
 - **Provide meaningful error messages**
 - **Handle edge cases** gracefully
@@ -153,6 +166,7 @@ import ProductCard from './ProductCard.vue' // Component imports
 ## File Organization
 
 ### 1. Directory Structure
+
 ```
 src/
 ├── components/          # Reusable Vue components
@@ -167,6 +181,7 @@ src/
 ```
 
 ### 2. File Naming
+
 - **Components**: `ComponentName.vue`
 - **Types**: `component-name.d.ts`
 - **Utils**: `component-name.utils.ts`
@@ -175,14 +190,20 @@ src/
 ## Naming Conventions
 
 ### 1. CSS Classes (BEM Methodology)
+
 ```css
-.block {}                    /* Main component */
-.block__element {}           /* Component element */
-.block--modifier {}          /* Component modifier */
-.block__element--modifier {} /* Element modifier */
+.block {
+} /* Main component */
+.block__element {
+} /* Component element */
+.block--modifier {
+} /* Component modifier */
+.block__element--modifier {
+} /* Element modifier */
 ```
 
 ### 2. Variables and Functions
+
 ```typescript
 // Variables
 const productList = ref([])
@@ -200,18 +221,21 @@ const MAX_ITEMS_PER_PAGE = 20
 ## Performance Guidelines
 
 ### 1. Vue.js Performance
+
 - **Use `v-show`** instead of `v-if` for frequently toggled elements
 - **Implement `key` attributes** for list rendering
 - **Use `computed` properties** for expensive calculations
 - **Lazy load** components when possible
 
 ### 2. CSS Performance
+
 - **Minimize specificity** conflicts
 - **Use CSS variables** for dynamic values
 - **Optimize selectors** for better performance
 - **Avoid deep nesting** (max 3 levels)
 
 ### 3. Bundle Optimization
+
 - **Tree shake** unused code
 - **Code split** by routes
 - **Optimize images** and assets
@@ -220,18 +244,21 @@ const MAX_ITEMS_PER_PAGE = 20
 ## Accessibility Standards
 
 ### 1. Semantic HTML
+
 - **Use proper heading hierarchy** (h1, h2, h3, etc.)
 - **Include alt text** for images
 - **Use ARIA labels** where necessary
 - **Ensure keyboard navigation** works
 
 ### 2. RTL Support
+
 - **Always include RTL properties**
 - **Test with Persian text**
 - **Use logical properties** (margin-inline, padding-block)
 - **Consider text direction** in layouts
 
 ### 3. Color and Contrast
+
 - **Maintain WCAG contrast ratios**
 - **Don't rely solely on color** for information
 - **Test with color blindness simulators**
@@ -239,6 +266,7 @@ const MAX_ITEMS_PER_PAGE = 20
 ## Code Review Checklist
 
 ### Before Committing
+
 - [ ] Code follows naming conventions
 - [ ] No console.log statements in production
 - [ ] All TypeScript errors resolved
@@ -250,6 +278,7 @@ const MAX_ITEMS_PER_PAGE = 20
 - [ ] Performance considerations applied
 
 ### Testing Requirements
+
 - [ ] Components render correctly
 - [ ] User interactions work as expected
 - [ ] Responsive breakpoints function properly
@@ -260,6 +289,7 @@ const MAX_ITEMS_PER_PAGE = 20
 ## Documentation Standards
 
 ### 1. Code Comments
+
 ```typescript
 /**
  * Fetches products from the API
@@ -273,6 +303,7 @@ const fetchProducts = async (page: number, limit: number): Promise<Product[]> =>
 ```
 
 ### 2. Component Documentation
+
 ```vue
 <!--
   ProductCard Component
@@ -290,6 +321,7 @@ const fetchProducts = async (page: number, limit: number): Promise<Product[]> =>
 ## Version Control
 
 ### 1. Commit Messages
+
 ```
 feat: add product card component
 fix: resolve RTL layout issues
@@ -299,6 +331,7 @@ test: add unit tests for ProductCard
 ```
 
 ### 2. Branch Naming
+
 - **Feature branches**: `feature/component-name`
 - **Bug fixes**: `fix/issue-description`
 - **Hotfixes**: `hotfix/critical-fix`
@@ -306,4 +339,4 @@ test: add unit tests for ProductCard
 
 ---
 
-*This document should be updated as the project evolves and new standards are established.* 
+_This document should be updated as the project evolves and new standards are established._

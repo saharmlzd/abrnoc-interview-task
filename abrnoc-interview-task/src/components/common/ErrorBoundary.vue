@@ -11,9 +11,7 @@
           <pre>{{ errorDetails }}</pre>
         </details>
       </div>
-      <button @click="resetError" class="error-boundary__button">
-        تلاش مجدد
-      </button>
+      <button @click="resetError" class="error-boundary__button">تلاش مجدد</button>
     </div>
   </div>
   <div v-else>
@@ -34,30 +32,34 @@ export default defineComponent({
 
     const errorMessage = computed(() => {
       if (!error.value) return 'متأسفانه مشکلی در بارگذاری این بخش پیش آمده است.'
-      
+
       // Handle different types of errors
       if (error.value.message.includes('fetch') || error.value.message.includes('network')) {
         return 'خطا در اتصال به سرور. لطفاً اتصال اینترنت خود را بررسی کنید.'
       }
-      
+
       if (error.value.message.includes('404')) {
         return 'منبع مورد نظر یافت نشد.'
       }
-      
+
       if (error.value.message.includes('500')) {
         return 'خطای سرور. لطفاً بعداً تلاش کنید.'
       }
-      
+
       return error.value.message || 'متأسفانه مشکلی در بارگذاری این بخش پیش آمده است.'
     })
 
     const errorDetails = computed(() => {
       if (!error.value) return ''
-      return JSON.stringify({
-        message: error.value.message,
-        stack: error.value.stack,
-        name: error.value.name
-      }, null, 2)
+      return JSON.stringify(
+        {
+          message: error.value.message,
+          stack: error.value.stack,
+          name: error.value.name,
+        },
+        null,
+        2
+      )
     })
 
     const resetError = () => {
@@ -68,13 +70,10 @@ export default defineComponent({
     }
 
     // Handle component errors
-    onErrorCaptured((err: Error, instance, info) => {
-      console.error('ErrorBoundary caught an error:', err)
-      console.error('Error info:', info)
-      
+    onErrorCaptured((err: Error) => {
       hasError.value = true
       error.value = err
-      
+
       // Return false to prevent the error from propagating further
       return false
     })
@@ -97,7 +96,7 @@ export default defineComponent({
     onMounted(() => {
       // Check for existing global errors
       handleGlobalError()
-      
+
       // Listen for new global errors
       window.addEventListener('app-error', handleAppError as EventListener)
     })
@@ -112,9 +111,9 @@ export default defineComponent({
       errorMessage,
       errorDetails,
       showDetails,
-      resetError
+      resetError,
     }
-  }
+  },
 })
 </script>
 
@@ -189,4 +188,4 @@ export default defineComponent({
   outline: 2px solid #dc2626;
   outline-offset: 2px;
 }
-</style> 
+</style>

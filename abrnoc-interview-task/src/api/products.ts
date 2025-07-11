@@ -12,7 +12,10 @@ export const removeProduct = async (productId: string): Promise<boolean> => {
   })
 }
 
-export const updateProductQuantity = async (productId: string, quantity: number): Promise<Product> => {
+export const updateProductQuantity = async (
+  productId: string,
+  quantity: number
+): Promise<Product> => {
   return await apiRequest(`/products/${productId}`, {
     method: 'PATCH',
     headers: {
@@ -25,31 +28,27 @@ export const updateProductQuantity = async (productId: string, quantity: number)
 export const useProductsQuery = () => {
   const baseQuery = useBaseQuery()
 
-  const fetchProducts = async (options?: { 
-    onSuccess?: (data: Product[]) => void; 
-    onError?: (error: string) => void 
+  const fetchProducts = async (options?: {
+    onSuccess?: (data: Product[]) => void
+    onError?: (error: string) => void
   }) => {
     return await baseQuery.executeQuery(getProducts, options)
   }
 
-  const removeProductFromList = async (productId: string, options?: { 
-    onSuccess?: (data: boolean) => void; 
-    onError?: (error: string) => void 
-  }) => {
-    return await baseQuery.executeQuery(() => removeProduct(productId), options)
-  }
-
-  const updateProductQuantityInList = async (productId: string, quantity: number, options?: { 
-    onSuccess?: (data: Product) => void; 
-    onError?: (error: string) => void 
-  }) => {
+  const updateProductQuantityInList = async (
+    productId: string,
+    quantity: number,
+    options?: {
+      onSuccess?: (data: Product) => void
+      onError?: (error: string) => void
+    }
+  ) => {
     return await baseQuery.executeQuery(() => updateProductQuantity(productId, quantity), options)
   }
 
   return {
     ...baseQuery,
     fetchProducts,
-    removeProductFromList,
     updateProductQuantityInList,
   }
 }

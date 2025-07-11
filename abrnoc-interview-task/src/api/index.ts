@@ -14,7 +14,7 @@ const apiRequest = async (url: string, options: RequestInit = {}) => {
     if (error instanceof TypeError && error.message.includes('fetch')) {
       throw new Error('خطا در اتصال به سرور. لطفاً اتصال اینترنت خود را بررسی کنید.')
     }
-    
+
     // Re-throw other errors
     throw error
   }
@@ -25,4 +25,3 @@ export default apiRequest
 // Export hooks
 export { useBaseQuery } from './useBaseQuery'
 export { useProductsQuery } from './products'
-export { useCartQuery } from './cart'

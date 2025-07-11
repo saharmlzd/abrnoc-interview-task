@@ -9,10 +9,10 @@ export const ErrorType = {
   NETWORK: 'network',
   API: 'api',
   RUNTIME: 'runtime',
-  UNKNOWN: 'unknown'
+  UNKNOWN: 'unknown',
 } as const
 
-export type ErrorType = typeof ErrorType[keyof typeof ErrorType]
+export type ErrorType = (typeof ErrorType)[keyof typeof ErrorType]
 
 export interface AppError {
   type: ErrorType
@@ -23,29 +23,35 @@ export interface AppError {
 
 // Global error handler
 export const handleGlobalError = (error: Error | AppError, context?: string) => {
-  console.error('Global error caught:', error)
-  
   const appError: AppError = {
     type: ErrorType.UNKNOWN,
     message: error instanceof Error ? error.message : error.message,
     originalError: error instanceof Error ? error : undefined,
-    context
+    context,
   }
 
   // Determine error type
   if (error instanceof Error) {
-    if (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('Failed to fetch') || error.message.includes('timeout') || error.message.includes('سرور پاسخ نمی‌دهد')) {
+    const errorMessage = error.message
+    const isNetworkError =
+      errorMessage.includes('fetch') ||
+      errorMessage.includes('network') ||
+      errorMessage.includes('Failed to fetch') ||
+      errorMessage.includes('timeout') ||
+      errorMessage.includes('سرور پاسخ نمی‌دهد')
+
+    if (isNetworkError) {
       appError.type = ErrorType.NETWORK
       appError.message = 'خطا در اتصال به سرور. لطفاً اتصال اینترنت خود را بررسی کنید.'
-    } else if (error.message.includes('404')) {
+    } else if (errorMessage.includes('404')) {
       appError.type = ErrorType.API
       appError.message = 'منبع مورد نظر یافت نشد.'
-    } else if (error.message.includes('500')) {
+    } else if (errorMessage.includes('500')) {
       appError.type = ErrorType.API
       appError.message = 'خطای سرور. لطفاً بعداً تلاش کنید.'
-    } else if (error.message.includes('خطا در اتصال به سرور')) {
+    } else if (errorMessage.includes('خطا در اتصال به سرور')) {
       appError.type = ErrorType.NETWORK
-      appError.message = error.message
+      appError.message = errorMessage
     } else {
       appError.type = ErrorType.RUNTIME
     }
@@ -55,9 +61,11 @@ export const handleGlobalError = (error: Error | AppError, context?: string) => 
   hasGlobalError.value = true
 
   // Dispatch custom event for error boundary
-  window.dispatchEvent(new CustomEvent('app-error', { 
-    detail: { error: appError } 
-  }))
+  window.dispatchEvent(
+    new CustomEvent('app-error', {
+      detail: { error: appError },
+    })
+  )
 }
 
 // Clear global error
@@ -82,13 +90,11 @@ export const handleApiError = (error: Error, endpoint?: string) => {
 export const setupGlobalErrorHandling = () => {
   // Handle unhandled promise rejections
   window.addEventListener('unhandledrejection', (event) => {
-    console.error('Unhandled promise rejection:', event.reason)
     handleGlobalError(new Error(event.reason), 'unhandled-promise')
   })
 
   // Handle global errors
   window.addEventListener('error', (event) => {
-    console.error('Global error:', event.error)
     handleGlobalError(event.error || new Error(event.message), 'global-error')
   })
-} 
+}

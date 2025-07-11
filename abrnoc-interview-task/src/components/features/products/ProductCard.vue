@@ -22,12 +22,7 @@
     />
 
     <!-- Show remove button if in cart and showRemove is true -->
-    <button
-      v-if="showRemove"
-      @click="removeFromCart"
-      class="cart-remove-btn"
-      type="button"
-    >
+    <button v-if="showRemove" @click="removeFromCart" class="cart-remove-btn" type="button">
       حذف
     </button>
 
@@ -86,7 +81,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const { findCartItemById } = useCart()
     const { formattedPrice, cartItem, canAdd, canIncrease } = useProductCard(
-      props.product, 
+      props.product,
       findCartItemById
     )
     const { createThrottledFunction } = useThrottle(500) // 500ms throttle

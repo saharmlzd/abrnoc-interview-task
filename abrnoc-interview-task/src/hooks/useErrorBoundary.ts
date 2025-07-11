@@ -9,13 +9,10 @@ export function useErrorBoundary() {
     error.value = null
   }
 
-  const captureError = (err: Error, instance: any, info: string) => {
-    console.error('ErrorBoundary caught an error:', err)
-    console.error('Error info:', info)
-    
+  const captureError = (err: Error) => {
     hasError.value = true
     error.value = err
-    
+
     // Return false to prevent the error from propagating further
     return false
   }
@@ -26,6 +23,6 @@ export function useErrorBoundary() {
     hasError,
     error,
     resetError,
-    captureError
+    captureError,
   }
-} 
+}

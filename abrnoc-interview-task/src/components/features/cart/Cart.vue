@@ -40,13 +40,12 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter()
-    const { 
-      cart: cartItems, 
-      totalCost, 
-      increaseQuantity, 
-      decreaseQuantity, 
-      removeFromCart, 
-      clearCart 
+    const {
+      cart: cartItems,
+      totalCost,
+      increaseQuantity,
+      decreaseQuantity,
+      removeFromCart,
     } = useCart()
 
     const { createThrottledFunction } = useThrottle(2000) // 2 second throttle
@@ -57,14 +56,14 @@ export default defineComponent({
 
     const checkout = createThrottledFunction(handleCheckout)
 
-    return { 
-      cartItems, 
-      totalCost, 
-      formatPrice, 
-      increaseQuantity, 
-      decreaseQuantity, 
-      removeFromCart, 
-      checkout 
+    return {
+      cartItems,
+      totalCost,
+      formatPrice,
+      increaseQuantity,
+      decreaseQuantity,
+      removeFromCart,
+      checkout,
     }
   },
 })
