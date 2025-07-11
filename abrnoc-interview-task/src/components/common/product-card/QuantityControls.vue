@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { toPersianDigits } from '../../utils/formatters'
+import { toPersianDigits } from '../../../utils/formatters'
 import './QuantityControls.css'
 
 export default defineComponent({

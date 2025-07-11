@@ -16,7 +16,6 @@ export function useHeaderConfig() {
   const headerConfig = computed<HeaderConfig>(() => {
     const path = route.path
 
-    // Define header behavior for different routes
     const configs: Record<string, HeaderConfig> = {
       '/': {
         show: true,
@@ -44,7 +43,6 @@ export function useHeaderConfig() {
       },
     }
 
-    // Default configuration for unknown routes
     const defaultConfig: HeaderConfig = {
       show: true,
       showBackButton: true,

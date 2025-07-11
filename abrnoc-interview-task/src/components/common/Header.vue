@@ -2,7 +2,6 @@
   <header v-if="headerConfig.show" class="header">
     <div class="header__container">
       <div class="header__left">
-        <!-- Back button -->
         <button
           v-if="headerConfig.showBackButton"
           @click="goBack"
@@ -15,7 +14,6 @@
           <span>بازگشت</span>
         </button>
 
-        <!-- Title and logo -->
         <router-link
           v-if="
             headerConfig.showTitle && headerConfig.titleClickable && !headerConfig.showBackButton
@@ -37,7 +35,6 @@
       </div>
 
       <div class="header__right">
-        <!-- Title with cart badge for cart page -->
         <div
           v-if="headerConfig.showTitle && headerConfig.showBackButton && $route.path === '/cart'"
           class="header__title-container"

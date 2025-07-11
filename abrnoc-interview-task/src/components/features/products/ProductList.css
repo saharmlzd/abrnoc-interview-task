@@ -29,7 +29,6 @@
   width: 100%;
   background: none;
 }
-/* Mobile specific spacing */
 @media (max-width: 767px) {
   .product-list {
     padding: 1rem;

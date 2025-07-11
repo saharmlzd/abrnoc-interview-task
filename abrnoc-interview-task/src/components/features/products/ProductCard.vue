@@ -1,21 +1,13 @@
 <template>
   <div class="product-card">
-    <!-- Header Section -->
     <div class="product-card__header">
       <div class="product-card__title-section">
         <h3 class="product-card__title">{{ product.name }}</h3>
       </div>
 
-      <!-- Stock Status -->
-      <div class="product-card__stock-status" :class="{ 'out-of-stock': product.quantity <= 0 }">
-        <div class="product-card__stock-indicator"></div>
-        <span class="product-card__stock-text">
-          {{ product.quantity > 0 ? 'موجود' : 'ناموجود' }}
-        </span>
-      </div>
+      <StockStatus :quantity="product.quantity" />
     </div>
 
-    <!-- Price Section -->
     <div class="product-card__price-section">
       <div class="product-card__price-header">
         <h4 class="product-card__price-title">قیمت محصول</h4>
@@ -34,70 +26,26 @@
       </div>
     </div>
 
-    <!-- Action Section -->
     <div class="product-card__action-section">
-      <!-- Quantity Controls -->
-      <div v-if="cartItem" class="product-card__quantity-controls">
-        <QuantityControls
-          :quantity="cartItem.cartQuantity"
-          :max-quantity="cartItem.quantity"
-          @increase="increaseQuantity"
-          @decrease="decreaseQuantity"
-        />
-      </div>
-
-      <!-- Action Buttons -->
-      <div class="product-card__buttons">
-        <!-- Add to Cart Button -->
-        <button
-          v-if="!cartItem && !showRemove"
-          @click="addToCart"
-          class="product-card__button product-card__button--add"
-          type="button"
-          :disabled="product.quantity <= 0"
-        >
-          <span>
-            {{ product.quantity > 0 ? 'افزودن به سبد خرید' : 'ناموجود' }}
-          </span>
-        </button>
-
-        <!-- Remove from Cart Button -->
-        <button
-          v-if="showRemove"
-          @click="removeFromCart"
-          class="product-card__button product-card__button--remove"
-          type="button"
-        >
-          <svg class="product-card__button-icon" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-            />
-          </svg>
-          <span>حذف از سبد</span>
-        </button>
-
-        <!-- Remove from List Button -->
-        <button
-          v-if="showRemoveFromList"
-          @click="removeFromList"
-          class="product-card__button product-card__button--delete"
-          type="button"
-        >
-          <svg class="product-card__button-icon" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-            />
-          </svg>
-          <span>حذف از لیست</span>
-        </button>
-      </div>
+      <ProductCardButtons
+        :cart-item="cartItem"
+        :show-remove="showRemove"
+        :show-remove-from-list="showRemoveFromList"
+        :quantity="product.quantity"
+        @add-to-cart="addToCart"
+        @remove-from-cart="removeFromCart"
+        @remove-from-list="removeFromList"
+        @increase-quantity="increaseQuantity"
+        @decrease-quantity="decreaseQuantity"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
-import QuantityControls from '../../ui/QuantityControls.vue'
+import StockStatus from '../../common/product-card/StockStatus.vue'
+import ProductCardButtons from '../../common/product-card/ProductCardButtons.vue'
 import { useCart } from '../../../hooks/useCart'
 import { useProductCard } from '../../../hooks/useProductCard'
 import { useThrottle } from '../../../hooks/useThrottle'
@@ -108,7 +56,8 @@ import { toPersianDigits } from '../../../utils/formatters'
 export default defineComponent({
   name: 'ProductCard',
   components: {
-    QuantityControls,
+    StockStatus,
+    ProductCardButtons,
   },
   props: {
     product: {
@@ -131,7 +80,7 @@ export default defineComponent({
       props.product,
       findCartItemById
     )
-    const { createThrottledFunction } = useThrottle(500) // 500ms throttle
+    const { createThrottledFunction } = useThrottle(500)
 
     const handleAddToCart = () => {
       if (canAdd.value) {
