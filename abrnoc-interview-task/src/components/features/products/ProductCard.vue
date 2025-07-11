@@ -1,67 +1,63 @@
 <template>
   <div class="product-card">
-    <div class="product-card__info">
-      <h3 class="product-card__title">{{ product.name }}</h3>
-      <div class="product-card__price">
-        <span class="product-card__price-label">قیمت:</span>
-        <span class="product-card__price-value">{{ formattedPrice }}</span>
+    <div class="product-card__header">
+      <div class="product-card__title-section">
+        <h3 class="product-card__title">{{ product.name }}</h3>
       </div>
-      <div class="product-card__stock">
-        <span class="product-card__stock-label">موجودی:</span>
-        <span class="product-card__stock-value">{{ product.quantity }}</span>
+
+      <StockStatus :quantity="product.quantity" />
+    </div>
+
+    <div class="product-card__price-section">
+      <div class="product-card__price-header">
+        <h4 class="product-card__price-title">قیمت محصول</h4>
+        <div class="product-card__quantity-info">
+          {{
+            product.quantity > 0
+              ? `${toPersianDigits(product.quantity)} عدد موجود`
+              : 'موجودی تمام شده'
+          }}
+        </div>
+      </div>
+
+      <div class="product-card__price-display">
+        <span class="product-card__price-value">{{ formattedPrice }}</span>
+        <span class="product-card__price-currency">تومان</span>
       </div>
     </div>
 
-    <!-- Show quantity controls if item is in cart -->
-    <QuantityControls
-      v-if="cartItem"
-      :quantity="cartItem.cartQuantity"
-      :max-quantity="cartItem.quantity"
-      @increase="increaseQuantity"
-      @decrease="decreaseQuantity"
-    />
-
-    <!-- Show remove button if in cart and showRemove is true -->
-    <button v-if="showRemove" @click="removeFromCart" class="cart-remove-btn" type="button">
-      حذف
-    </button>
-
-    <!-- Show add button if item is not in cart -->
-    <button
-      v-else
-      @click="addToCart"
-      class="product-card__button"
-      type="button"
-      :disabled="product.quantity <= 0"
-    >
-      {{ product.quantity > 0 ? 'افزودن به سبد خرید' : 'ناموجود' }}
-    </button>
-
-    <!-- Show remove from list button if showRemoveFromList is true -->
-    <button
-      v-if="showRemoveFromList"
-      @click="removeFromList"
-      class="product-card__remove-btn"
-      type="button"
-    >
-      حذف از لیست
-    </button>
+    <div class="product-card__action-section">
+      <ProductCardButtons
+        :cart-item="cartItem"
+        :show-remove="showRemove"
+        :show-remove-from-list="showRemoveFromList"
+        :quantity="product.quantity"
+        @add-to-cart="addToCart"
+        @remove-from-cart="removeFromCart"
+        @remove-from-list="removeFromList"
+        @increase-quantity="increaseQuantity"
+        @decrease-quantity="decreaseQuantity"
+      />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
-import QuantityControls from '../../ui/QuantityControls.vue'
+import StockStatus from '../../common/product-card/StockStatus.vue'
+import ProductCardButtons from '../../common/product-card/ProductCardButtons.vue'
 import { useCart } from '../../../hooks/useCart'
 import { useProductCard } from '../../../hooks/useProductCard'
 import { useThrottle } from '../../../hooks/useThrottle'
 import type { Product } from '../../../types/cart-store'
 import './ProductCard.css'
+import { toPersianDigits } from '../../../utils/formatters'
 
 export default defineComponent({
   name: 'ProductCard',
   components: {
-    QuantityControls,
+    StockStatus,
+    ProductCardButtons,
   },
   props: {
     product: {
@@ -84,7 +80,7 @@ export default defineComponent({
       props.product,
       findCartItemById
     )
-    const { createThrottledFunction } = useThrottle(500) // 500ms throttle
+    const { createThrottledFunction } = useThrottle(500)
 
     const handleAddToCart = () => {
       if (canAdd.value) {
@@ -124,6 +120,7 @@ export default defineComponent({
       decreaseQuantity,
       removeFromCart,
       removeFromList,
+      toPersianDigits,
     }
   },
 })

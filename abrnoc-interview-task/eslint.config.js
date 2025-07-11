@@ -28,7 +28,7 @@ export default [
       'no-unused-vars': 'off', // Turn off base rule as it conflicts with TypeScript rule
       'no-console': 'warn',
       'no-debugger': 'warn',
-      'max-len': ['error', { code: 100 }],
+      'max-len': ['error', { code: 120 }],
       'prefer-const': 'error',
       'vue/multi-word-component-names': ['error', { ignores: ['index', 'App'] }],
     },

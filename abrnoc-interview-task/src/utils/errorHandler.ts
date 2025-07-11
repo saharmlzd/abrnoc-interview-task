@@ -1,14 +1,14 @@
 import { ref } from 'vue'
 
-// Global error state
 export const globalError = ref<Error | null>(null)
 export const hasGlobalError = ref(false)
 
-// Error types
 export const ErrorType = {
   NETWORK: 'network',
   API: 'api',
   RUNTIME: 'runtime',
+  NAVIGATION: 'navigation',
+  NOT_FOUND: 'not_found',
   UNKNOWN: 'unknown',
 } as const
 
@@ -21,7 +21,6 @@ export interface AppError {
   context?: string
 }
 
-// Global error handler
 export const handleGlobalError = (error: Error | AppError, context?: string) => {
   const appError: AppError = {
     type: ErrorType.UNKNOWN,
@@ -30,21 +29,30 @@ export const handleGlobalError = (error: Error | AppError, context?: string) => 
     context,
   }
 
-  // Determine error type
   if (error instanceof Error) {
-    const errorMessage = error.message
+    const errorMessage = error.message.toLowerCase()
     const isNetworkError =
       errorMessage.includes('fetch') ||
       errorMessage.includes('network') ||
-      errorMessage.includes('Failed to fetch') ||
+      errorMessage.includes('failed to fetch') ||
       errorMessage.includes('timeout') ||
       errorMessage.includes('سرور پاسخ نمی‌دهد')
 
-    if (isNetworkError) {
+    const isNavigationError =
+      errorMessage.includes('navigation') ||
+      errorMessage.includes('route not found') ||
+      errorMessage.includes('page not found') ||
+      errorMessage.includes('404') ||
+      errorMessage.includes('not found')
+
+    if (isNavigationError) {
+      appError.type = ErrorType.NAVIGATION
+      appError.message = 'صفحه مورد نظر یافت نشد. ممکن است آدرس اشتباه باشد یا صفحه حذف شده باشد.'
+    } else if (isNetworkError) {
       appError.type = ErrorType.NETWORK
       appError.message = 'خطا در اتصال به سرور. لطفاً اتصال اینترنت خود را بررسی کنید.'
     } else if (errorMessage.includes('404')) {
-      appError.type = ErrorType.API
+      appError.type = ErrorType.NOT_FOUND
       appError.message = 'منبع مورد نظر یافت نشد.'
     } else if (errorMessage.includes('500')) {
       appError.type = ErrorType.API
@@ -60,7 +68,6 @@ export const handleGlobalError = (error: Error | AppError, context?: string) => 
   globalError.value = new Error(appError.message)
   hasGlobalError.value = true
 
-  // Dispatch custom event for error boundary
   window.dispatchEvent(
     new CustomEvent('app-error', {
       detail: { error: appError },
@@ -68,32 +75,31 @@ export const handleGlobalError = (error: Error | AppError, context?: string) => 
   )
 }
 
-// Clear global error
 export const clearGlobalError = () => {
   globalError.value = null
   hasGlobalError.value = false
 }
 
-// Network error handler
 export const handleNetworkError = (error: Error, context?: string) => {
   const networkError = new Error(`Network error in ${context}: ${error.message}`)
   handleGlobalError(networkError, context)
 }
 
-// API error handler
 export const handleApiError = (error: Error, endpoint?: string) => {
   const apiError = new Error(`API error at ${endpoint}: ${error.message}`)
   handleGlobalError(apiError, endpoint)
 }
 
-// Setup global error listeners
+export const handleNavigationError = (error: Error, path?: string) => {
+  const navigationError = new Error(`Navigation error to ${path}: ${error.message}`)
+  handleGlobalError(navigationError, path)
+}
+
 export const setupGlobalErrorHandling = () => {
-  // Handle unhandled promise rejections
   window.addEventListener('unhandledrejection', (event) => {
     handleGlobalError(new Error(event.reason), 'unhandled-promise')
   })
 
-  // Handle global errors
   window.addEventListener('error', (event) => {
     handleGlobalError(event.error || new Error(event.message), 'global-error')
   })

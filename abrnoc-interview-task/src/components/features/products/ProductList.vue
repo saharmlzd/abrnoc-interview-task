@@ -51,7 +51,6 @@ export default defineComponent({
     const handleUpdateProductQuantity = async (productId: string, newQuantity: number) => {
       await updateProductQuantityInList(productId, newQuantity, {
         onSuccess: (updatedProduct) => {
-          // Update local state
           const updatedProducts = storeProducts.value.map((p: Product) =>
             p.id === productId ? updatedProduct : p
           )

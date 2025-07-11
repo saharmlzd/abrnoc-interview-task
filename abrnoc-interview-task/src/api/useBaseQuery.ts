@@ -23,11 +23,10 @@ export const useBaseQuery = () => {
     error.value = null
 
     try {
-      // Add timeout to handle unresponsive API calls
       const timeoutPromise = new Promise<never>((_, reject) => {
         setTimeout(() => {
           reject(new Error('Request timeout - سرور پاسخ نمی‌دهد'))
-        }, 10000) // 10 second timeout
+        }, 10000)
       })
 
       const result = await Promise.race([queryFn(), timeoutPromise])
@@ -39,7 +38,6 @@ export const useBaseQuery = () => {
       error.value = errorMessage
       options.onError?.(errorMessage)
 
-      // Handle global error for network/API failures
       if (err instanceof Error) {
         handleGlobalError(err, 'api-query')
       }
