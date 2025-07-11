@@ -10,7 +10,7 @@
           type="button"
         >
           <svg class="header__back-icon" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            <path d="M4 13h12.17l-5.59 5.59L12 20l8-8-8-8-1.41 1.41L16.17 11H4v2z"/>
           </svg>
           <span>بازگشت</span>
         </button>
@@ -46,7 +46,7 @@
               class="header__cart-badge" 
               v-if="cartItemCount > 0"
             >
-              {{ cartItemCount }}
+              {{ toPersianDigits(cartItemCount) }}
             </span>
           </div>
           <span class="header__cart-text">سبد خرید</span>
@@ -62,6 +62,7 @@ import { useRouter } from 'vue-router'
 import { useCart } from '../../hooks/useCart'
 import { useHeaderConfig } from '../../hooks/useHeaderConfig'
 import './Header.css'
+import { toPersianDigits } from '../../utils/formatters'
 
 export default defineComponent({
   name: 'AppHeader',
@@ -77,7 +78,8 @@ export default defineComponent({
     return { 
       cartItemCount,
       headerConfig,
-      goBack 
+      goBack,
+      toPersianDigits,
     }
   },
 })

@@ -5,16 +5,11 @@
         <div class="cart-page-title">
           <h1>سبد خرید</h1>
           <div class="cart-badge">
-            <span class="cart-badge-number">{{ cartItems.length }}</span>
+            <span class="cart-badge-number">{{ toPersianDigits(cartItems.length) }}</span>
             <span class="cart-badge-text">محصول</span>
           </div>
         </div>
-        <router-link to="/" class="back-to-shop">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-          </svg>
-          <span>بازگشت به فروشگاه</span>
-        </router-link>
+       
       </div>
 
       <div v-if="cartItems.length === 0" class="empty-cart">
@@ -45,24 +40,22 @@
           />
         </div>
 
-        <!-- <div class="order-summary-bar">
+        <div class="order-summary-bar">
           <div class="order-summary-bar__content">
-            <div class="order-summary-bar__row">
-              <span>تعداد محصولات:</span>
-              <span>{{ cartItems.length }} عدد</span>
-            </div>
             <div class="order-summary-bar__row order-summary-bar__row--total">
               <span>مجموع کل:</span>
               <span class="order-summary-bar__total">{{ formatPrice(totalCost) }} تومان</span>
+              <div class="order-summary-bar__actions">
+                <ActionButtons
+                  :show-checkout="true"
+                  :show-continue-shopping="true"
+                  :can-checkout="cartItems.length > 0"
+                  @checkout="checkout"
+                />
+              </div>
             </div>
-            <ActionButtons
-              :show-checkout="true"
-              :show-continue-shopping="true"
-              :can-checkout="cartItems.length > 0"
-              @checkout="checkout"
-            />
           </div>
-        </div> -->
+        </div>
     </div>
   </div>
 </template>
@@ -74,7 +67,7 @@ import ProductCard from '../products/ProductCard.vue'
 import ActionButtons from '../../ui/ActionButtons.vue'
 import { useCart } from '../../../hooks/useCart'
 import { useThrottle } from '../../../hooks/useThrottle'
-import { formatPrice } from '../../../utils/formatters'
+import { formatPrice, toPersianDigits } from '../../../utils/formatters'
 import './Cart.css'
 import { useStore } from 'vuex'
 
@@ -115,6 +108,7 @@ export default defineComponent({
       decreaseQuantity,
       removeFromCart,
       checkout,
+      toPersianDigits,
     }
   },
 })

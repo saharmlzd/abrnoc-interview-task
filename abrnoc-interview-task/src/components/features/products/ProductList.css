@@ -29,6 +29,12 @@
   width: 100%;
   background: none;
 }
+.product-list,
+.product-list__grid,
+.product-list__loading,
+.product-list__error {
+  font-family: 'Dana', sans-serif !important;
+}
 /* Mobile specific spacing */
 @media (max-width: 767px) {
   .product-list {

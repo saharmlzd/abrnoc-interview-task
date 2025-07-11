@@ -188,4 +188,13 @@ export default defineComponent({
   outline: 2px solid #dc2626;
   outline-offset: 2px;
 }
+
+.error-boundary__title,
+.error-boundary__message,
+.error-boundary__details,
+.error-boundary__details summary,
+.error-boundary__details pre,
+.error-boundary__button {
+  font-family: 'Dana', sans-serif !important;
+}
 </style>

@@ -297,4 +297,25 @@
   animation: pulse 1.5s infinite;
 }
 
+.product-card,
+.product-card__header,
+.product-card__title-section,
+.product-card__title,
+.product-card__stock-status,
+.product-card__stock-text,
+.product-card__price-section,
+.product-card__price-header,
+.product-card__price-title,
+.product-card__quantity-info,
+.product-card__price-display,
+.product-card__price-value,
+.product-card__price-currency,
+.product-card__action-section,
+.product-card__quantity-controls,
+.product-card__quantity-label,
+.product-card__buttons,
+.product-card__button {
+  font-family: 'Dana', sans-serif !important;
+}
+
 

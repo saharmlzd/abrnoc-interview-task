@@ -20,7 +20,7 @@
       <div class="product-card__price-header">
         <h4 class="product-card__price-title">قیمت محصول</h4>
         <div class="product-card__quantity-info">
-          {{ product.quantity > 0 ? `${product.quantity} عدد موجود` : 'موجودی تمام شده' }}
+          {{ product.quantity > 0 ? `${toPersianDigits(product.quantity)} عدد موجود` : 'موجودی تمام شده' }}
         </div>
       </div>
       
@@ -93,6 +93,7 @@ import { useProductCard } from '../../../hooks/useProductCard'
 import { useThrottle } from '../../../hooks/useThrottle'
 import type { Product } from '../../../types/cart-store'
 import './ProductCard.css'
+import { toPersianDigits } from '../../../utils/formatters'
 
 export default defineComponent({
   name: 'ProductCard',
@@ -160,6 +161,7 @@ export default defineComponent({
       decreaseQuantity,
       removeFromCart,
       removeFromList,
+      toPersianDigits,
     }
   },
 })

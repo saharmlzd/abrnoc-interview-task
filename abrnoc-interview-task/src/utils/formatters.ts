@@ -1,10 +1,19 @@
 /**
+ * Converts all Western digits in a string to Persian digits
+ */
+export const toPersianDigits = (input: string | number): string => {
+  return String(input).replace(/\d/g, d =>
+    String.fromCharCode(d.charCodeAt(0) + 1728)
+  )
+}
+
+/**
  * Formats a number as Persian currency
  * @param price - The price to format
  * @returns Formatted price string
  */
 export const formatPrice = (price: number): string => {
-  return price.toLocaleString('fa-IR')
+  return toPersianDigits(price.toLocaleString('fa-IR'))
 }
 
 /**
@@ -13,5 +22,5 @@ export const formatPrice = (price: number): string => {
  * @returns Formatted number string
  */
 export const formatNumber = (value: number): string => {
-  return value.toLocaleString('fa-IR')
+  return toPersianDigits(value.toLocaleString('fa-IR'))
 }

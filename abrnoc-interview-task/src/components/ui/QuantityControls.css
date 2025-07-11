@@ -60,3 +60,10 @@
 .quantity-btn--decrease:hover:not(:disabled) {
   background: #c0392b;
 }
+
+.quantity-controls,
+.quantity-value,
+.quantity-buttons,
+.quantity-btn {
+  font-family: 'Dana', sans-serif !important;
+}
