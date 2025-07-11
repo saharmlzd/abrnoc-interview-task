@@ -1,6 +1,6 @@
 import apiRequest from './index'
 
-export const addToCart = async (productId: number, quantity: number) => {
+export const addToCart = async (productId: string, quantity: number) => {
   return await apiRequest('/cart', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

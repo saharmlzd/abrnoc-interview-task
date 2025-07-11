@@ -24,6 +24,8 @@ export default [
     },
     rules: {
       '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-unused-vars': 'error',
+      'no-unused-vars': 'off', // Turn off base rule as it conflicts with TypeScript rule
       'no-console': 'warn',
       'no-debugger': 'warn',
       'max-len': ['error', { code: 100 }],

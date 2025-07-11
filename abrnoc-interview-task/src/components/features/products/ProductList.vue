@@ -22,6 +22,7 @@
 import { defineComponent, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import ProductCard from './ProductCard.vue'
+import { ActionTypes } from '../../../store'
 import type { Product } from '../../../types/cart-store'
 import './ProductList.css'
 
@@ -36,18 +37,18 @@ export default defineComponent({
     const loading = computed(() => store.state.loading)
     const error = computed(() => store.state.error)
     const addToCart = (product: Product) => {
-      store.dispatch('addToCartAction', {
+      store.dispatch(ActionTypes.ADD_TO_CART, {
         productId: product.id,
         quantity: 1,
       })
     }
     const increaseQuantity = (productId: string) => { 
-      store.dispatch('increaseQuantity', productId) 
+      store.dispatch(ActionTypes.INCREASE_QUANTITY, productId) 
     }
     const decreaseQuantity = (productId: string) => { 
-      store.dispatch('decreaseQuantity', productId) 
+      store.dispatch(ActionTypes.DECREASE_QUANTITY, productId) 
     }
-    onMounted(() => { store.dispatch('fetchProducts') })
+    onMounted(() => { store.dispatch(ActionTypes.FETCH_PRODUCTS) })
     return { products, loading, error, addToCart, increaseQuantity, decreaseQuantity }
   },
 })

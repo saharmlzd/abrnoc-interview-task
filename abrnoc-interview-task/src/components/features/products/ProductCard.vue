@@ -16,10 +16,20 @@
     <QuantityControls
       v-if="cartItem"
       :quantity="cartItem.cartQuantity"
-      :max-quantity="product.quantity"
+      :max-quantity="cartItem.quantity"
       @increase="increaseQuantity"
       @decrease="decreaseQuantity"
     />
+
+    <!-- Show remove button if in cart and showRemove is true -->
+    <button
+      v-if="showRemove"
+      @click="removeFromCart"
+      class="cart-remove-btn"
+      type="button"
+    >
+      حذف
+    </button>
 
     <!-- Show add button if item is not in cart -->
     <button
@@ -52,7 +62,12 @@ export default defineComponent({
       type: Object as PropType<Product>,
       required: true,
     },
+    showRemove: {
+      type: Boolean,
+      default: false,
+    },
   },
+  emits: ['add-to-cart', 'increase-quantity', 'decrease-quantity', 'remove'],
   setup(props, { emit }) {
     const store = useStore()
 
@@ -80,12 +95,17 @@ export default defineComponent({
       emit('decrease-quantity', props.product.id)
     }
 
+    const removeFromCart = () => {
+      emit('remove', props.product.id)
+    }
+
     return {
       formattedPrice,
       addToCart,
       cartItem,
       increaseQuantity,
       decreaseQuantity,
+      removeFromCart,
     }
   },
 })

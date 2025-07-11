@@ -1,28 +1,26 @@
 import { createStore } from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import { getProducts } from '../api/products'
-import { addToCart, getCart } from '../api/cart'
 import type { CartProduct, Product, ShoppingCartState } from '../types/cart-store'
 import type { ActionContext } from 'vuex/types/index.js'
 
 export const ActionTypes = {
   FETCH_PRODUCTS: 'fetchProducts',
-  FETCH_CART: 'fetchCart',
-  ADD_TO_CART: 'addToCartAction',
+  ADD_TO_CART: 'addToCart',
   INCREASE_QUANTITY: 'increaseQuantity',
   DECREASE_QUANTITY: 'decreaseQuantity',
   REMOVE_FROM_CART: 'removeFromCart',
 }
 
 export default createStore<ShoppingCartState>({
-  state: { products: [], cart: [] },
+  state: { products: [], cart: [], loading: false, error: null },
 
   mutations: {
     setProducts(state: ShoppingCartState, products: Product[]) {
       state.products = [...products]
     },
 
-    addToCart(state: ShoppingCartState, product: CartProduct) {
+    addToCart(state: ShoppingCartState, product: Product & { cartQuantity: number }) {
       const existingProduct = state.cart.find((item) => item.id === product.id)
       if (existingProduct && existingProduct.cartQuantity < product.quantity) {
         existingProduct.cartQuantity++
@@ -51,6 +49,14 @@ export default createStore<ShoppingCartState>({
       state.cart = []
     },
 
+    setLoading(state: ShoppingCartState, loading: boolean) {
+      state.loading = loading
+    },
+
+    setError(state: ShoppingCartState, error: string | null) {
+      state.error = error
+    },
+
     initializeCart(state: ShoppingCartState) {
       if (!state.cart) state.cart = []
     },
@@ -61,30 +67,25 @@ export default createStore<ShoppingCartState>({
       commit,
     }: ActionContext<ShoppingCartState, ShoppingCartState>) {
       try {
+        commit('setLoading', true)
+        commit('setError', null)
         const products = await getProducts()
         commit('setProducts', products)
-      } catch (error) {
-        // Error handling for product fetching
+      } catch {
+        commit('setError', 'خطا در بارگذاری محصولات')
+      } finally {
+        commit('setLoading', false)
       }
     },
 
-    async [ActionTypes.FETCH_CART]({
-      commit,
-    }: ActionContext<ShoppingCartState, ShoppingCartState>) {
-      try {
-        const cart = await getCart()
-        commit('setCart', cart)
-      } catch (error) {
-        // Error handling for cart fetching
-      }
-    },
+
 
     async [ActionTypes.ADD_TO_CART](
       { commit, state }: ActionContext<ShoppingCartState, ShoppingCartState>,
-      { productId, quantity }: { productId: string; quantity: number }
+      { productId }: { productId: string; quantity: number }
     ) {
       const product = state.products.find((item: Product) => item.id === productId)
-      if (product) commit('addToCart', { ...product, cartQuantity: quantity })
+      if (product) commit('addToCart', { ...product, cartQuantity: 1 })
     },
 
     async [ActionTypes.INCREASE_QUANTITY](
