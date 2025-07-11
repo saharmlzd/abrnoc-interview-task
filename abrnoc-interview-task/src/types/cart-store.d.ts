@@ -12,4 +12,6 @@ export interface CartProduct extends Product {
 export interface ShoppingCartState {
   products: Product[]
   cart: CartProduct[]
+  loading: boolean
+  error: string | null
 }

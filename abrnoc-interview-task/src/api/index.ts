@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
 
 const apiRequest = async (url: string, options: RequestInit = {}) => {
   const response = await fetch(`${API_BASE_URL}${url}`, options)
@@ -11,3 +11,8 @@ const apiRequest = async (url: string, options: RequestInit = {}) => {
 }
 
 export default apiRequest
+
+// Export hooks
+export { useBaseQuery } from './useBaseQuery'
+export { useProductsQuery } from './products'
+export { useCartQuery } from './cart'

@@ -4,12 +4,13 @@
       <p>سبد خرید شما خالی است</p>
     </div>
     <div v-else class="cart__items">
-      <CartItem
+      <ProductCard
         v-for="item in cartItems"
         :key="item.id"
-        :item="item"
-        @increase="increaseQuantity"
-        @decrease="decreaseQuantity"
+        :product="item"
+        :showRemove="true"
+        @increase-quantity="increaseQuantity"
+        @decrease-quantity="decreaseQuantity"
         @remove="removeFromCart"
       />
       <div class="cart__summary">
@@ -24,36 +25,37 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { useStore } from 'vuex'
-import CartItem from './CartItem.vue'
-import { ActionTypes } from '../../../store'
-import type { CartProduct } from '../../../types/cart-store'
+import { defineComponent } from 'vue'
+import ProductCard from '../../features/products/ProductCard.vue'
+import { useCart } from '../../../hooks/useCart'
+import { useThrottle } from '../../../hooks/useThrottle'
+import { formatPrice } from '../../../utils/formatters'
 import './Cart.css'
-
 
 export default defineComponent({
   name: 'ShoppingCart',
   components: {
-    CartItem,
+    ProductCard,
   },
   setup() {
-    const store = useStore()
-    const cartItems = computed(() => store.state.cart)
-    const totalCost = computed(() => store.getters.totalCost)
-    const formatPrice = (price: number) => price.toLocaleString('fa-IR')
-    const increaseQuantity = (productId: number) => 
-      store.dispatch(ActionTypes.INCREASE_QUANTITY, productId)
-    const decreaseQuantity = (productId: number) => 
-      store.dispatch(ActionTypes.DECREASE_QUANTITY, productId)
-    const removeFromCart = (productId: number) => 
-      store.dispatch(ActionTypes.REMOVE_FROM_CART, productId)
-    const checkout = () => {
+    const { 
+      cart: cartItems, 
+      totalCost, 
+      increaseQuantity, 
+      decreaseQuantity, 
+      removeFromCart, 
+      clearCart 
+    } = useCart()
+
+    const { createThrottledFunction } = useThrottle(2000) // 2 second throttle
+
+    const handleCheckout = () => {
       alert('سفارش شما با موفقیت ثبت شد!')
-      cartItems.value.forEach((item: CartProduct) => {
-        store.dispatch(ActionTypes.REMOVE_FROM_CART, item.id)
-      })
+      clearCart()
     }
+
+    const checkout = createThrottledFunction(handleCheckout)
+
     return { 
       cartItems, 
       totalCost, 

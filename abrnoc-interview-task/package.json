@@ -11,7 +11,8 @@
     "lint": "eslint --ext .js,.ts,.vue src",
     "lint:fix": "eslint --ext .js,.ts,.vue src --fix",
     "prettier": "prettier --write .",
-    "format": "npm run lint:fix && npm run prettier"
+    "format": "npm run lint:fix && npm run prettier",
+    "test": "jest"
   },
   "dependencies": {
     "vue": "^3.5.17",
@@ -20,6 +21,7 @@
     "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vue/tsconfig": "^0.7.0",

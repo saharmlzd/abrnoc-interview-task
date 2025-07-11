@@ -18,11 +18,11 @@
 </template>
 
 <script lang="ts">
-
-import { defineComponent, computed, onMounted } from 'vue'
-import { useStore } from 'vuex'
+import { defineComponent, onMounted, computed } from 'vue'
 import ProductCard from './ProductCard.vue'
-import type { Product } from '../../../types/cart-store'
+import { useProductsQuery } from '../../../api/products'
+import { useCart } from '../../../hooks/useCart'
+import { useStore } from 'vuex'
 import './ProductList.css'
 
 export default defineComponent({
@@ -32,23 +32,45 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    const products = computed(() => store.state.products)
-    const loading = computed(() => store.state.loading)
-    const error = computed(() => store.state.error)
-    const addToCart = (product: Product) => {
-      store.dispatch('addToCartAction', {
-        productId: product.id,
-        quantity: 1,
+    const { fetchProducts, updateProductQuantityInList } = useProductsQuery()
+    const { addToCart, increaseQuantity, decreaseQuantity } = useCart()
+    
+    onMounted(async () => {
+      await fetchProducts({
+        onSuccess: (data) => {
+          store.commit('setProducts', data)
+        }
+      })
+    })
+    
+    const storeProducts = computed(() => store.state.products)
+    const storeLoading = computed(() => store.state.loading)
+    const storeError = computed(() => store.state.error)
+    
+    const handleUpdateProductQuantity = async (productId: string, newQuantity: number) => {
+      await updateProductQuantityInList(productId, newQuantity, {
+        onSuccess: (updatedProduct) => {
+          // Update local state
+          const updatedProducts = storeProducts.value.map((p: any) => 
+            p.id === productId ? updatedProduct : p
+          )
+          store.commit('setProducts', updatedProducts)
+        },
+        onError: (error) => {
+          alert(`خطا در بروزرسانی موجودی: ${error}`)
+        }
       })
     }
-    const increaseQuantity = (productId: string) => { 
-      store.dispatch('increaseQuantity', productId) 
+    
+    return { 
+      products: storeProducts, 
+      loading: storeLoading, 
+      error: storeError, 
+      addToCart, 
+      increaseQuantity, 
+      decreaseQuantity,
+      handleUpdateProductQuantity
     }
-    const decreaseQuantity = (productId: string) => { 
-      store.dispatch('decreaseQuantity', productId) 
-    }
-    onMounted(() => { store.dispatch('fetchProducts') })
-    return { products, loading, error, addToCart, increaseQuantity, decreaseQuantity }
   },
 })
 </script>
