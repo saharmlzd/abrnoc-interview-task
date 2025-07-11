@@ -252,32 +252,54 @@
 @media (max-width: 480px) {
   .product-card {
     max-width: 100%;
-    border-radius: 20px;
+    margin: 0 0.5rem;
   }
 
-  .product-card__header,
-  .product-card__price-section,
-  .product-card__action-section {
-    padding: 16px 20px;
+  .product-card__header {
+    padding: 16px 16px 12px;
   }
 
   .product-card__title {
     font-size: 0.9rem;
   }
 
+  .product-card__price-section {
+    padding: 12px 16px;
+  }
+
+  .product-card__price-title {
+    font-size: 0.8rem;
+  }
+
   .product-card__price-value {
-    font-size: 1.5rem;
+    font-size: 1rem;
+  }
+
+  .product-card__action-section {
+    padding: 12px 16px 16px;
   }
 
   .product-card__button {
-    padding: 12px 16px;
-    font-size: 0.85rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-card {
+    max-width: 320px;
   }
 
-  .product-card__price-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
+  .product-card__header {
+    padding: 20px 20px 14px;
+  }
+
+  .product-card__price-section {
+    padding: 14px 20px;
+  }
+
+  .product-card__action-section {
+    padding: 14px 20px 20px;
   }
 }
 
@@ -294,25 +316,4 @@
 
 .product-card__stock-status.out-of-stock .product-card__stock-indicator {
   animation: pulse 1.5s infinite;
-}
-
-.product-card,
-.product-card__header,
-.product-card__title-section,
-.product-card__title,
-.product-card__stock-status,
-.product-card__stock-text,
-.product-card__price-section,
-.product-card__price-header,
-.product-card__price-title,
-.product-card__quantity-info,
-.product-card__price-display,
-.product-card__price-value,
-.product-card__price-currency,
-.product-card__action-section,
-.product-card__quantity-controls,
-.product-card__quantity-label,
-.product-card__buttons,
-.product-card__button {
-  font-family: 'Dana', sans-serif !important;
 }

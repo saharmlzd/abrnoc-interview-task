@@ -7,21 +7,13 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: 'Dana';
-  src: url('../assets/fonts/Dana.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Global Font Settings - Dana Only */
+/* Global Font Settings - IRANSans */
 * {
-  font-family: 'Dana', sans-serif;
+  font-family: 'IRANSans', 'Tahoma', 'Arial', sans-serif;
 }
 
 :root {
-  --font-family-primary: 'Dana', sans-serif;
+  --font-family-primary: 'IRANSans', 'Tahoma', 'Arial', sans-serif;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-bold: 700;
@@ -72,7 +64,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  font-family: 'Dana', sans-serif;
+  font-family: 'IRANSans', 'Tahoma', 'Arial', sans-serif;
   font-weight: var(--font-weight-normal);
   line-height: var(--line-height-base);
   color: var(--color-primary);
@@ -135,7 +127,7 @@ button:focus-visible {
   direction: rtl;
   text-align: right;
   background: var(--color-bg-main);
-  font-family: 'Dana', sans-serif;
+  font-family: 'IRANSans', 'Tahoma', 'Arial', sans-serif;
 }
 
 .app-container {

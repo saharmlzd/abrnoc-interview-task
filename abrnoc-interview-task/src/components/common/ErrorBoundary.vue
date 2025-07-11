@@ -22,6 +22,7 @@
 <script lang="ts">
 import { defineComponent, ref, onErrorCaptured, computed, onMounted, onUnmounted } from 'vue'
 import { globalError, hasGlobalError, clearGlobalError } from '../../utils/errorHandler'
+import './ErrorBoundary.css'
 
 export default defineComponent({
   name: 'ErrorBoundary',
@@ -78,7 +79,7 @@ export default defineComponent({
       return false
     })
 
-    // Handle global errors
+    
     const handleGlobalError = () => {
       if (hasGlobalError.value && globalError.value) {
         hasError.value = true
@@ -86,7 +87,6 @@ export default defineComponent({
       }
     }
 
-    // Listen for global errors
     const handleAppError = (event: CustomEvent) => {
       const appError = event.detail.error
       hasError.value = true
@@ -94,10 +94,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      // Check for existing global errors
       handleGlobalError()
-
-      // Listen for new global errors
       window.addEventListener('app-error', handleAppError as EventListener)
     })
 
@@ -116,85 +113,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style scoped>
-.error-boundary {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
-  padding: 2rem;
-  background-color: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 8px;
-  margin: 1rem 0;
-}
-
-.error-boundary__content {
-  text-align: center;
-  max-width: 400px;
-}
-
-.error-boundary__title {
-  color: #dc2626;
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-.error-boundary__message {
-  color: #6b7280;
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
-}
-
-.error-boundary__details {
-  margin-bottom: 1.5rem;
-  text-align: left;
-}
-
-.error-boundary__details summary {
-  cursor: pointer;
-  color: #dc2626;
-  font-weight: 500;
-}
-
-.error-boundary__details pre {
-  background-color: #f3f4f6;
-  padding: 0.5rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  overflow-x: auto;
-  margin-top: 0.5rem;
-}
-
-.error-boundary__button {
-  background-color: #dc2626;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.error-boundary__button:hover {
-  background-color: #b91c1c;
-}
-
-.error-boundary__button:focus {
-  outline: 2px solid #dc2626;
-  outline-offset: 2px;
-}
-
-.error-boundary__title,
-.error-boundary__message,
-.error-boundary__details,
-.error-boundary__details summary,
-.error-boundary__details pre,
-.error-boundary__button {
-  font-family: 'Dana', sans-serif !important;
-}
-</style>

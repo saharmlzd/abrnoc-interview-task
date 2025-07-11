@@ -175,18 +175,6 @@
   font-size: 0.7rem;
 }
 
-.header,
-.header__container,
-.header__left,
-.header__logo,
-.header__title-container,
-.header__title,
-.header__right,
-.header__cart,
-.header__cart-text {
-  font-family: 'Dana', sans-serif !important;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .header__container {

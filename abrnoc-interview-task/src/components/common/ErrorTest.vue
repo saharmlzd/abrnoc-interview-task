@@ -9,6 +9,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import './ErrorTest.css'
 
 export default defineComponent({
   name: 'ErrorTest',
@@ -29,26 +30,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style scoped>
-.error-test {
-  padding: 1rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  margin: 1rem 0;
-}
-
-.error-test__button {
-  background-color: #ef4444;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  margin-right: 0.5rem;
-  cursor: pointer;
-}
-
-.error-test__button:hover {
-  background-color: #dc2626;
-}
-</style>
