@@ -9,7 +9,7 @@ export const throttle = <T extends (...args: unknown[]) => unknown>(
   delay: number
 ): ((...args: Parameters<T>) => void) => {
   let lastCall = 0
-  let timeoutId: number | null = null
+  let timeoutId: ReturnType<typeof setTimeout> | null = null
 
   return (...args: Parameters<T>) => {
     const now = Date.now()

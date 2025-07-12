@@ -96,11 +96,11 @@ export const handleNavigationError = (error: Error, path?: string) => {
 }
 
 export const setupGlobalErrorHandling = () => {
-  window.addEventListener('unhandledrejection', (event) => {
+  window.addEventListener('unhandledrejection', (event: PromiseRejectionEvent) => {
     handleGlobalError(new Error(event.reason), 'unhandled-promise')
   })
 
-  window.addEventListener('error', (event) => {
+  window.addEventListener('error', (event: ErrorEvent) => {
     handleGlobalError(event.error || new Error(event.message), 'global-error')
   })
 }
