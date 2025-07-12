@@ -4,25 +4,28 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.97);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+  box-shadow: 0 4px 10px -1px rgba(45, 58, 74, 0.08);
   direction: rtl;
+  width: 100%;
 }
 
 .header__container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem 2rem;
+  max-width: 100%;
+  width: 100%;
+  padding: 1rem 3rem;
 }
 
 .header__left {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  margin-left: 1rem;
 }
 
 .header__logo {
@@ -58,7 +61,7 @@
   background: none;
   border: none;
   color: #64748b;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   padding: 0.5rem 1rem;
@@ -94,6 +97,8 @@
 .header__right {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  margin-right: 1rem;
 }
 
 .header__cart {
@@ -101,19 +106,20 @@
   align-items: center;
   gap: 0.75rem;
   text-decoration: none;
-  color: #1e293b;
+  color: white;
   padding: 0.75rem 1.25rem;
   border-radius: 12px;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border: none;
   transition: all 0.2s ease;
   position: relative;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
 }
 
 .header__cart:hover {
-  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 .header__cart-icon {
@@ -132,8 +138,8 @@
 
 .header__cart-badge {
   position: absolute;
-  top: -2px;
-  right: -10px;
+  top: -5px;
+  right: -7px;
   background: #ef4444;
   color: white;
   font-size: 0.75rem;
@@ -145,13 +151,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid white;
 }
 
 .header__cart-text {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #475569;
+  color: white;
 }
 
 .header__cart-badge-inline {

@@ -8,7 +8,8 @@
           <ActionButtons
             :show-checkout="true"
             :show-continue-shopping="true"
-            :can-checkout="canCheckout"
+            :can-checkout="canCheckout && !isProcessing"
+            :is-processing="isProcessing"
             @checkout="$emit('checkout')"
           />
         </div>
@@ -36,6 +37,10 @@ export default defineComponent({
     canCheckout: {
       type: Boolean,
       required: true,
+    },
+    isProcessing: {
+      type: Boolean,
+      default: false,
     },
   },
   emits: ['checkout'],

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <ErrorBoundary>
+      <Header />
       <div class="app-container">
-        <Header />
         <router-view />
       </div>
     </ErrorBoundary>

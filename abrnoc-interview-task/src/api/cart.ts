@@ -20,3 +20,25 @@ export const clearCart = async (): Promise<boolean> => {
     method: 'DELETE',
   })
 }
+
+export const checkout = async (cartItems: CartProduct[]): Promise<{ success: boolean; orderId: string }> => {
+  try {
+    await apiRequest('/cart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(cartItems),
+    });
+    
+    const orderId = `ord-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    
+    return {
+      success: true,
+      orderId: orderId
+    };
+  } catch (error) {
+    const errorDetails = error instanceof Error ? error.message : String(error);
+    throw new Error(`Checkout failed: ${errorDetails}`);
+  }
+}
