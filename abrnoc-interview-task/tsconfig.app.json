@@ -2,7 +2,10 @@
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "types": ["jest"],
+    "types": ["jest", "node"],
+    "target": "ES2015",
+    "lib": ["DOM", "DOM.Iterable", "ES2015", "ES2016", "ES2017"],
+    "skipLibCheck": true,
 
     /* Linting */
     "strict": true,
@@ -12,5 +15,12 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/**/*.d.ts",
+    "src/**/*.test.ts",
+    "src/**/*.spec.ts"
+  ]
 }

@@ -2,10 +2,11 @@
   "files": [],
   "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
   "compilerOptions": {
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["vite/client", "jest"],
+    "types": ["vite/client", "jest", "node"],
     "resolveJsonModule": true
   }
 }

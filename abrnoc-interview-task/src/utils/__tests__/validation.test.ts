@@ -1,8 +1,8 @@
-import { 
-  isProductAvailable, 
-  canAddToCart, 
-  canIncreaseQuantity, 
-  canDecreaseQuantity 
+import {
+  isProductAvailable,
+  canAddToCart,
+  canIncreaseQuantity,
+  canDecreaseQuantity,
 } from '../validation'
 import type { Product, CartProduct } from '../../types/cart-store'
 
@@ -30,4 +30,4 @@ describe('validation utils', () => {
     expect(canDecreaseQuantity(cartItem)).toBe(true)
     expect(canDecreaseQuantity({ ...cartItem, cartQuantity: 1 })).toBe(false)
   })
-}) 
+})

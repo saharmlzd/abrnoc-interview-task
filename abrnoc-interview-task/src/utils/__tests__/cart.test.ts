@@ -27,4 +27,4 @@ describe('cart utils', () => {
     expect(isCartEmpty([])).toBe(true)
     expect(isCartEmpty(cart)).toBe(false)
   })
-}) 
+})

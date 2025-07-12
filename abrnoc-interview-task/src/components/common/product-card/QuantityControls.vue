@@ -9,7 +9,7 @@
       >
         -
       </button>
-      <span class="quantity-value">{{ quantity }}</span>
+      <span class="quantity-value">{{ toPersianDigits(quantity) }}</span>
       <button
         @click="$emit('increase')"
         class="quantity-btn quantity-btn--increase"
@@ -24,6 +24,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { toPersianDigits } from '../../../utils/formatters'
 import './QuantityControls.css'
 
 export default defineComponent({
@@ -39,5 +40,8 @@ export default defineComponent({
     },
   },
   emits: ['increase', 'decrease'],
+  setup() {
+    return { toPersianDigits }
+  },
 })
 </script>

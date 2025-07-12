@@ -1,4 +1,5 @@
 import { ref, computed } from 'vue'
+import { handleGlobalError } from '../utils/errorHandler'
 
 export interface QueryOptions<T> {
   onSuccess?: (data: T) => void
@@ -22,7 +23,13 @@ export const useBaseQuery = () => {
     error.value = null
 
     try {
-      const result = await queryFn()
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        setTimeout(() => {
+          reject(new Error('Request timeout - سرور پاسخ نمی‌دهد'))
+        }, 10000)
+      })
+
+      const result = await Promise.race([queryFn(), timeoutPromise])
       data.value = result
       options.onSuccess?.(result)
       return result
@@ -30,6 +37,11 @@ export const useBaseQuery = () => {
       const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred'
       error.value = errorMessage
       options.onError?.(errorMessage)
+
+      if (err instanceof Error) {
+        handleGlobalError(err, 'api-query')
+      }
+
       return null
     } finally {
       loading.value = false
@@ -60,4 +72,4 @@ export const useBaseQuery = () => {
     clearData,
     reset,
   }
-} 
+}
