@@ -4,8 +4,7 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.97);
-  backdrop-filter: blur(10px);
+  background: #ffffff;
   border-bottom: 1px solid rgba(59, 130, 246, 0.15);
   box-shadow: 0 4px 10px -1px rgba(45, 58, 74, 0.08);
   direction: rtl;
@@ -18,7 +17,7 @@
   align-items: center;
   max-width: 100%;
   width: 100%;
-  padding: 1rem 3rem;
+  padding: 1rem;
 }
 
 .header__left {
@@ -34,12 +33,6 @@
   gap: 0.75rem;
   text-decoration: none;
   color: #1e293b;
-  transition: all 0.2s ease;
-}
-
-.header__logo:hover {
-  color: #059669;
-  transform: translateY(-1px);
 }
 
 .header__title-container {
@@ -66,13 +59,6 @@
   cursor: pointer;
   padding: 0.5rem 1rem;
   border-radius: 8px;
-  transition: all 0.2s ease;
-}
-
-.header__back-btn:hover {
-  background: rgba(100, 116, 139, 0.1);
-  color: #475569;
-  transform: translateX(2px);
 }
 
 .header__back-icon {
@@ -109,17 +95,9 @@
   color: white;
   padding: 0.75rem 1.25rem;
   border-radius: 12px;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: #3b82f6;
   border: none;
-  transition: all 0.2s ease;
   position: relative;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
-}
-
-.header__cart:hover {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 .header__cart-icon {

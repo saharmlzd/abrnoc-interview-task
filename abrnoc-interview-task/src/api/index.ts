@@ -5,9 +5,11 @@ const apiRequest = async (url: string, options: RequestInit = {}) => {
     const response = await fetch(`${API_BASE_URL}${url}`, options)
 
     if (response.status === 404) {
-      throw new Error(`API Endpoint Not Found: The requested resource '${url}' does not exist on the server.`)
+      throw new Error(
+        `API Endpoint Not Found: The requested resource '${url}' does not exist on the server.`
+      )
     }
-    
+
     if (!response.ok) {
       throw new Error(`API Error: ${response.status} - ${response.statusText}`)
     }

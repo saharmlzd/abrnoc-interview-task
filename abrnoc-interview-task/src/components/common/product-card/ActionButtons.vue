@@ -17,7 +17,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import './ActionButtons.css'
 
 export default defineComponent({
   name: 'ActionButtons',
@@ -42,3 +41,7 @@ export default defineComponent({
   emits: ['checkout'],
 })
 </script>
+
+<style>
+@import './ActionButtons.css';
+</style>

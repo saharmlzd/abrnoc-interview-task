@@ -1,34 +1,51 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import ProductList from '../components/features/products/ProductList.vue'
-import Cart from '../components/features/cart/Cart.vue'
-import Payment from '../components/features/payment/Payment.vue'
-import ErrorTest from '../components/common/ErrorTest.vue'
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 
-const routes = [
-  { path: '/', component: ProductList },
-  { path: '/cart', component: Cart },
-  { path: '/payment', component: Payment },
-  { path: '/test-error', component: ErrorTest },
+const ProductList = () => import('../components/features/products/ProductList.vue')
+const Cart = () => import('../components/features/cart/Cart.vue')
+const Payment = () => import('../components/features/payment/Payment.vue')
+const ErrorTest = () => import('../components/common/ErrorTest.vue')
+const NotFound = () => import('../components/common/NotFound.vue')
+
+const routes: RouteRecordRaw[] = [
+  {
+    path: '/',
+    component: ProductList,
+    name: 'ProductList',
+    meta: { title: 'محصولات' },
+  },
+  {
+    path: '/cart',
+    component: Cart,
+    name: 'Cart',
+    meta: { title: 'سبد خرید' },
+  },
+  {
+    path: '/payment',
+    component: Payment,
+    name: 'Payment',
+    meta: { title: 'پرداخت' },
+  },
+  {
+    path: '/test-error',
+    component: ErrorTest,
+    name: 'ErrorTest',
+    meta: { title: 'تست خطا' },
+  },
   {
     path: '/:pathMatch(.*)*',
-    component: {
-      template: '<div></div>',
-      mounted() {
-        const error = new Error('صفحه مورد نظر یافت نشد')
-        window.dispatchEvent(
-          new CustomEvent('app-error', {
-            detail: { error: { message: 'صفحه مورد نظر یافت نشد' } },
-          })
-        )
-        throw error
-      },
-    },
+    name: 'NotFound',
+    component: NotFound,
   },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+})
+
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title ? `${to.meta.title} | فروشگاه آنلاین` : 'فروشگاه آنلاین'
+  next()
 })
 
 router.onError((error) => {
@@ -39,6 +56,8 @@ router.onError((error) => {
       })
     )
   }
+
+  throw error
 })
 
 export default router

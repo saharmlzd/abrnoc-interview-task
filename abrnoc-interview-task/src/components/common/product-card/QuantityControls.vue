@@ -6,9 +6,9 @@
       type="button"
       :disabled="quantity <= 0"
     >
-      <svg 
-        viewBox="0 0 24 24" 
-        fill="none" 
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
         stroke="currentColor"
         stroke-width="2.5"
         stroke-linecap="round"
@@ -24,9 +24,9 @@
       type="button"
       :disabled="quantity >= maxQuantity"
     >
-      <svg 
-        viewBox="0 0 24 24" 
-        fill="none" 
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
         stroke="currentColor"
         stroke-width="2.5"
         stroke-linecap="round"
@@ -42,23 +42,44 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { toPersianDigits } from '../../../utils/formatters'
-import './QuantityControls.css'
 
 export default defineComponent({
   name: 'QuantityControls',
   props: {
     quantity: {
-      type: Number,
+      type: Number as () => number,
       required: true,
+      validator: (value: number) => value >= 0,
     },
     maxQuantity: {
-      type: Number,
+      type: Number as () => number,
       required: true,
+      validator: (value: number) => value >= 0,
     },
   },
   emits: ['increase', 'decrease'],
-  setup() {
-    return { toPersianDigits }
+  setup(props, { emit }) {
+    const handleIncrease = () => {
+      if (props.quantity < props.maxQuantity) {
+        emit('increase')
+      }
+    }
+
+    const handleDecrease = () => {
+      if (props.quantity > 0) {
+        emit('decrease')
+      }
+    }
+
+    return {
+      toPersianDigits,
+      handleIncrease,
+      handleDecrease,
+    }
   },
 })
 </script>
+
+<style>
+@import './QuantityControls.css';
+</style>

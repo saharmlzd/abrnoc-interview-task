@@ -2,7 +2,7 @@ import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { ActionTypes, MutationTypes } from '../store'
 import { findCartItem, calculateTotalCost, calculateCartItemCount } from '../utils/cart'
-import type { Product, CartProduct } from '../types/cart-store'
+import type { Product } from '../types/cart-store'
 
 /**
  * Hook for cart operations
@@ -20,7 +20,7 @@ export const useCart = () => {
    * Add a product to the cart
    * @param product - The product to add
    */
-  const addToCart = (product: Product): void => {
+  const addToCart = (product: Product) => {
     store.dispatch(ActionTypes.ADD_TO_CART, {
       productId: product.id,
       quantity: 1,
@@ -31,7 +31,7 @@ export const useCart = () => {
    * Increase the quantity of a product in the cart
    * @param productId - ID of the product
    */
-  const increaseQuantity = (productId: string): void => {
+  const increaseQuantity = (productId: string) => {
     store.dispatch(ActionTypes.INCREASE_QUANTITY, productId)
   }
 
@@ -39,7 +39,7 @@ export const useCart = () => {
    * Decrease the quantity of a product in the cart
    * @param productId - ID of the product
    */
-  const decreaseQuantity = (productId: string): void => {
+  const decreaseQuantity = (productId: string) => {
     store.dispatch(ActionTypes.DECREASE_QUANTITY, productId)
   }
 
@@ -47,7 +47,7 @@ export const useCart = () => {
    * Remove a product from the cart
    * @param productId - ID of the product to remove
    */
-  const removeFromCart = (productId: string): void => {
+  const removeFromCart = (productId: string) => {
     store.dispatch(ActionTypes.REMOVE_FROM_CART, productId)
   }
 
@@ -56,14 +56,14 @@ export const useCart = () => {
    * @param productId - ID of the product to find
    * @returns The cart item if found, otherwise null
    */
-  const findCartItemById = (productId: string): CartProduct | undefined => {
+  const findCartItemById = (productId: string) => {
     return findCartItem(cart.value, productId)
   }
 
   /**
    * Clear the entire cart
    */
-  const clearCart = (): void => {
+  const clearCart = () => {
     store.commit(MutationTypes.CLEAR_CART)
   }
 

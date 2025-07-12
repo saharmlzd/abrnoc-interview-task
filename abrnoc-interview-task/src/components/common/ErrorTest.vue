@@ -1,26 +1,56 @@
 <template>
   <div class="error-test">
-    <h3>Error Test Component</h3>
-    <p>This component is used to test the error boundary.</p>
-    <button @click="throwError" class="error-test__button">Throw Error</button>
-    <button @click="throwAsyncError" class="error-test__button">Throw Async Error</button>
+    <h3>{{ title }}</h3>
+    <p>{{ description || 'This component is used to test the error boundary.' }}</p>
+    <button @click="throwError" class="error-test__button">{{ errorButtonText }}</button>
+    <button @click="throwAsyncError" class="error-test__button">{{ asyncErrorButtonText }}</button>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import './ErrorTest.css'
 
 export default defineComponent({
   name: 'ErrorTest',
-  setup() {
-    const throwError = () => {
-      throw new Error('This is a test error from ErrorTest component')
+  props: {
+    title: {
+      type: String as () => string,
+      default: 'Error Test Component',
+    },
+    description: {
+      type: String as () => string,
+      default: '',
+    },
+    errorButtonText: {
+      type: String as () => string,
+      default: 'Throw Error',
+    },
+    asyncErrorButtonText: {
+      type: String as () => string,
+      default: 'Throw Async Error',
+    },
+    errorMessage: {
+      type: String as () => string,
+      default: 'This is a test error from ErrorTest component',
+    },
+    asyncErrorMessage: {
+      type: String as () => string,
+      default: 'This is an async test error from ErrorTest component',
+    },
+  },
+  emits: ['error-thrown', 'async-error-thrown'],
+  setup(props, { emit }) {
+    const throwError = (): never => {
+      const error = new Error(props.errorMessage)
+      emit('error-thrown', error)
+      throw error
     }
 
-    const throwAsyncError = async () => {
+    const throwAsyncError = async (): Promise<never> => {
       await new Promise((resolve) => setTimeout(resolve, 100))
-      throw new Error('This is an async test error from ErrorTest component')
+      const error = new Error(props.asyncErrorMessage)
+      emit('async-error-thrown', error)
+      throw error
     }
 
     return {
@@ -30,3 +60,7 @@ export default defineComponent({
   },
 })
 </script>
+
+<style>
+@import './ErrorTest.css';
+</style>

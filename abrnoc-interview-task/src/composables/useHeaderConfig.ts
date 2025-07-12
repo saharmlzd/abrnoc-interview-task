@@ -10,18 +10,7 @@ interface HeaderConfig {
   titleClickable: boolean
 }
 
-interface HeaderConfigOptions {
-  showBackButton?: boolean
-  showCart?: boolean
-  customTitle?: string
-}
-
-/**
- * Hook for header configuration
- * @param options - Optional configuration overrides
- * @returns Header configuration state
- */
-export function useHeaderConfig(options?: HeaderConfigOptions) {
+export function useHeaderConfig() {
   const route = useRoute()
 
   const headerConfig = computed<HeaderConfig>(() => {
@@ -63,23 +52,7 @@ export function useHeaderConfig(options?: HeaderConfigOptions) {
       titleClickable: false,
     }
 
-    const baseConfig = { ...(configs[path] || defaultConfig) }
-
-    if (options) {
-      if (options.showBackButton !== undefined) {
-        baseConfig.showBackButton = options.showBackButton
-      }
-
-      if (options.showCart !== undefined) {
-        baseConfig.showCart = options.showCart
-      }
-
-      if (options.customTitle) {
-        baseConfig.title = options.customTitle
-      }
-    }
-
-    return baseConfig
+    return configs[path] || defaultConfig
   })
 
   return {

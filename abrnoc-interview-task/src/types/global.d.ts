@@ -4,8 +4,6 @@
 /// <reference lib="es2017" />
 /// <reference types="jest" />
 
-// Global type declarations for the application
-
 declare global {
   interface WindowEventMap {
     'app-error': CustomEvent<{

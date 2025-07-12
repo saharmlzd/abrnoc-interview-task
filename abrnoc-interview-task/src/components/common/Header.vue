@@ -65,18 +65,40 @@ import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCart } from '../../hooks/useCart'
 import { useHeaderConfig } from '../../hooks/useHeaderConfig'
-import './Header.css'
 import { toPersianDigits } from '../../utils/formatters'
 import { AbrnocLogo, CartIcon } from '../../assets'
 
 export default defineComponent({
   name: 'AppHeader',
-  setup() {
+  props: {
+    showBackButton: {
+      type: Boolean as () => boolean,
+      default: undefined,
+    },
+    showCart: {
+      type: Boolean as () => boolean,
+      default: undefined,
+    },
+    customTitle: {
+      type: String as () => string,
+      default: undefined,
+    },
+  },
+  emits: ['back-clicked', 'config-updated'],
+  setup(props, { emit }) {
     const router = useRouter()
     const { cartItemCount } = useCart()
-    const { headerConfig } = useHeaderConfig()
 
-    const goBack = () => {
+    const { headerConfig } = useHeaderConfig({
+      showBackButton: props.showBackButton,
+      showCart: props.showCart,
+      customTitle: props.customTitle,
+    })
+
+    emit('config-updated', headerConfig)
+
+    const goBack = (): void => {
+      emit('back-clicked')
       router.go(-1)
     }
 
@@ -91,3 +113,7 @@ export default defineComponent({
   },
 })
 </script>
+
+<style>
+@import './Header.css';
+</style>
