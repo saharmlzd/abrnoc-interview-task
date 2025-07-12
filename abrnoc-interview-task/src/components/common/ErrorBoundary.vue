@@ -27,12 +27,26 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { useErrorBoundary } from '../../hooks/useErrorBoundary'
-import './ErrorBoundary.css'
 
 export default defineComponent({
   name: 'ErrorBoundary',
-  setup() {
-    return useErrorBoundary()
+  props: {
+    showDetails: {
+      type: Boolean as () => boolean,
+      default: true,
+    },
+  },
+  emits: ['error-caught', 'retry'],
+  setup(props, { emit }) {
+    const errorBoundary = useErrorBoundary(props.showDetails, emit)
+
+    return {
+      ...errorBoundary,
+    }
   },
 })
 </script>
+
+<style>
+@import './ErrorBoundary.css';
+</style>

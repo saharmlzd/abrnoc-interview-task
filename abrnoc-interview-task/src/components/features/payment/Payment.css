@@ -9,7 +9,7 @@
 .success-message {
   text-align: center;
   background: #f0f9ff;
-  padding: 3rem;
+  padding: 2rem;
   border-radius: 12px;
   border: 1px solid #bae6fd;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
@@ -39,25 +39,12 @@
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition:
-    background-color 0.2s,
-    transform 0.2s;
   margin-top: 1.5rem;
-}
-
-.home-button:hover {
-  background: #047857;
-  transform: translateY(-2px);
-}
-
-.home-button:focus {
-  outline: 2px solid #059669;
-  outline-offset: 2px;
 }
 
 @media (max-width: 480px) {
   .success-message {
-    padding: 2rem 1rem;
+    padding: 1.5rem 1rem;
   }
 
   .success-message h2 {

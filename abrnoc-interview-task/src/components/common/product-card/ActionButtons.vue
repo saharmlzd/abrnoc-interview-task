@@ -3,10 +3,11 @@
     <button
       v-if="showCheckout"
       class="checkout-btn"
-      :disabled="!canCheckout"
+      :disabled="!canCheckout || isProcessing"
       @click="$emit('checkout')"
     >
-      پرداخت
+      <span v-if="!isProcessing">پرداخت</span>
+      <span v-else class="loading-spinner"></span>
     </button>
     <router-link v-if="showContinueShopping" to="/" class="continue-shopping-btn">
       ادامه خرید
@@ -16,7 +17,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import './ActionButtons.css'
 
 export default defineComponent({
   name: 'ActionButtons',
@@ -33,7 +33,15 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    isProcessing: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['checkout'],
 })
 </script>
+
+<style>
+@import './ActionButtons.css';
+</style>

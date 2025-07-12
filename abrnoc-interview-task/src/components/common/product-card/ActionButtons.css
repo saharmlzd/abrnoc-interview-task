@@ -18,6 +18,9 @@
   transition: background 0.2s;
   min-width: 180px;
   box-shadow: 0 2px 8px rgba(5, 150, 105, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .checkout-btn:disabled {
@@ -44,6 +47,22 @@
 .continue-shopping-btn:hover {
   background: #3b82f6;
   color: white;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 768px) {

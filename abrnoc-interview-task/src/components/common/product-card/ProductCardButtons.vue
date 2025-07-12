@@ -50,9 +50,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, type PropType } from 'vue'
 import QuantityControls from './QuantityControls.vue'
-import './ProductCardButtons.css'
+import type { CartProduct } from '../../../types/cart-store'
 
 export default defineComponent({
   name: 'ProductCardButtons',
@@ -61,7 +61,7 @@ export default defineComponent({
   },
   props: {
     cartItem: {
-      type: Object,
+      type: Object as PropType<CartProduct | null>,
       default: null,
     },
     showRemove: {
@@ -75,6 +75,7 @@ export default defineComponent({
     quantity: {
       type: Number,
       required: true,
+      validator: (value: number) => value >= 0,
     },
   },
   emits: [
@@ -93,3 +94,7 @@ export default defineComponent({
   },
 })
 </script>
+
+<style>
+@import './ProductCardButtons.css';
+</style>

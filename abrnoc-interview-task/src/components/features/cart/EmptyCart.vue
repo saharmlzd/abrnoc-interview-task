@@ -14,7 +14,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { CartIcon } from '../../../assets'
-import './EmptyCart.css'
 
 export default defineComponent({
   name: 'EmptyCart',
@@ -25,3 +24,7 @@ export default defineComponent({
   },
 })
 </script>
+
+<style>
+@import './EmptyCart.css';
+</style>

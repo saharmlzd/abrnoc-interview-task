@@ -8,8 +8,9 @@
           <ActionButtons
             :show-checkout="true"
             :show-continue-shopping="true"
-            :can-checkout="canCheckout"
-            @checkout="$emit('checkout')"
+            :can-checkout="canCheckout && !isProcessing"
+            :is-processing="isProcessing"
+            @checkout="handleCheckout"
           />
         </div>
       </div>
@@ -21,7 +22,6 @@
 import { defineComponent } from 'vue'
 import ActionButtons from '../../common/product-card/ActionButtons.vue'
 import { formatPrice } from '../../../utils/formatters'
-import './SummaryBar.css'
 
 export default defineComponent({
   name: 'SummaryBar',
@@ -30,19 +30,35 @@ export default defineComponent({
   },
   props: {
     totalCost: {
-      type: Number,
+      type: Number as () => number,
       required: true,
+      validator: (value: number) => value >= 0,
     },
     canCheckout: {
-      type: Boolean,
+      type: Boolean as () => boolean,
       required: true,
+    },
+    isProcessing: {
+      type: Boolean as () => boolean,
+      default: false,
     },
   },
   emits: ['checkout'],
-  setup() {
+  setup(props, { emit }) {
+    const handleCheckout = () => {
+      if (props.canCheckout && !props.isProcessing) {
+        emit('checkout')
+      }
+    }
+
     return {
       formatPrice,
+      handleCheckout,
     }
   },
 })
 </script>
+
+<style>
+@import './SummaryBar.css';
+</style>

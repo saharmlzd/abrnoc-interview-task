@@ -8,21 +8,36 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import './StockStatus.css'
+import { defineComponent, computed } from 'vue'
 
 export default defineComponent({
   name: 'StockStatus',
   props: {
     quantity: {
-      type: Number,
+      type: Number as () => number,
       required: true,
+      validator: (value: number) => value >= 0,
+    },
+    threshold: {
+      type: Number as () => number,
+      default: 0,
     },
   },
-  computed: {
-    isInStock(): boolean {
-      return this.quantity > 0
-    },
+  emits: ['stock-status-change'],
+  setup(props, { emit }) {
+    const isInStock = computed(() => {
+      const status = props.quantity > props.threshold
+      emit('stock-status-change', status)
+      return status
+    })
+
+    return {
+      isInStock,
+    }
   },
 })
 </script>
+
+<style>
+@import './StockStatus.css';
+</style>

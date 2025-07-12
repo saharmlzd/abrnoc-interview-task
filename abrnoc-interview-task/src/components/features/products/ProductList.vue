@@ -21,10 +21,9 @@
 import { defineComponent, onMounted, computed } from 'vue'
 import ProductCard from './ProductCard.vue'
 import { useProductsQuery } from '../../../api/products'
-import { useCart } from '../../../hooks/useCart'
+import { useCart } from '../../../composables/useCart'
 import { useStore } from 'vuex'
 import type { Product } from '../../../types/cart-store'
-import './ProductList.css'
 
 export default defineComponent({
   name: 'ProductList',
@@ -74,3 +73,7 @@ export default defineComponent({
   },
 })
 </script>
+
+<style>
+@import './ProductList.css';
+</style>

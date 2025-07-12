@@ -43,15 +43,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue'
+import { defineComponent, type PropType, computed } from 'vue'
 import StockStatus from '../../common/product-card/StockStatus.vue'
 import ProductCardButtons from '../../common/product-card/ProductCardButtons.vue'
 import { useCart } from '../../../hooks/useCart'
-import { useProductCard } from '../../../hooks/useProductCard'
 import { useThrottle } from '../../../hooks/useThrottle'
 import type { Product } from '../../../types/cart-store'
-import './ProductCard.css'
-import { toPersianDigits } from '../../../utils/formatters'
+import { toPersianDigits, formatPrice } from '../../../utils/formatters'
 
 export default defineComponent({
   name: 'ProductCard',
@@ -63,23 +61,33 @@ export default defineComponent({
     product: {
       type: Object as PropType<Product>,
       required: true,
+      validator: (value: Product) =>
+        Boolean(value.id && value.name && typeof value.price === 'number'),
     },
     showRemove: {
-      type: Boolean,
+      type: Boolean as () => boolean,
       default: false,
     },
     showRemoveFromList: {
-      type: Boolean,
+      type: Boolean as () => boolean,
       default: false,
     },
   },
   emits: ['add-to-cart', 'increase-quantity', 'decrease-quantity', 'remove', 'remove-from-list'],
   setup(props, { emit }) {
     const { findCartItemById } = useCart()
-    const { formattedPrice, cartItem, canAdd, canIncrease } = useProductCard(
-      props.product,
-      findCartItemById
+
+    const cartItem = computed(() => findCartItemById(props.product.id))
+    const formattedPrice = computed(() => formatPrice(props.product.price))
+    const canAdd = computed(
+      () =>
+        props.product.quantity > 0 &&
+        (!cartItem.value || cartItem.value.cartQuantity < props.product.quantity)
     )
+    const canIncrease = computed(
+      () => cartItem.value && cartItem.value.cartQuantity < props.product.quantity
+    )
+
     const { createThrottledFunction } = useThrottle(500)
 
     const handleAddToCart = () => {
@@ -125,3 +133,7 @@ export default defineComponent({
   },
 })
 </script>
+
+<style>
+@import './ProductCard.css';
+</style>

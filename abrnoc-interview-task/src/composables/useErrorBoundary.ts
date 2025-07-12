@@ -9,46 +9,33 @@ import {
 } from '../utils/errorDetection'
 import { handleGlobalError, setupErrorListeners } from '../utils/errorHandlers'
 
-export interface ErrorBoundaryEmit {
-  (e: 'error-caught', error: Error): void
-  (e: 'retry'): void
-}
-
-export function useErrorBoundary(showErrorDetails = true, emit?: ErrorBoundaryEmit) {
+export function useErrorBoundary() {
   const router = useRouter()
-  const hasError = ref<boolean>(false)
+  const hasError = ref(false)
   const error = ref<Error | null>(null)
-  const showDetails = ref<boolean>(showErrorDetails)
-  const isRetrying = ref<boolean>(false)
+  const showDetails = ref(false)
+  const isRetrying = ref(false)
 
-  const errorTitle = computed<string>(() => getErrorTitle(error.value))
-  const errorMessage = computed<string>(() => getErrorMessage(error.value))
-  const errorDetails = computed<string>(() => getErrorDetails(error.value))
+  const errorTitle = computed(() => getErrorTitle(error.value))
+  const errorMessage = computed(() => getErrorMessage(error.value))
+  const errorDetails = computed(() => getErrorDetails(error.value))
 
-  const setError = (err: Error): void => {
+  const setError = (err: Error) => {
     hasError.value = true
     error.value = err
-
-    if (emit) {
-      emit('error-caught', err)
-    }
   }
 
-  const resetError = (): void => {
+  const resetError = () => {
     hasError.value = false
     error.value = null
-    showDetails.value = showErrorDetails
+    showDetails.value = false
     isRetrying.value = false
     clearGlobalError()
   }
 
-  const retry = async (): Promise<void> => {
+  const retry = async () => {
     isRetrying.value = true
     resetError()
-
-    if (emit) {
-      emit('retry')
-    }
 
     await nextTick()
 
@@ -61,7 +48,7 @@ export function useErrorBoundary(showErrorDetails = true, emit?: ErrorBoundaryEm
     }
   }
 
-  const goHome = async (): Promise<void> => {
+  const goHome = async () => {
     resetError()
     await nextTick()
 
@@ -90,18 +77,8 @@ export function useErrorBoundary(showErrorDetails = true, emit?: ErrorBoundaryEm
     handleGlobalError(isRetrying.value, setError)
     const { removeListeners } = setupErrorListeners(setError, isRetrying.value)
 
-    const handleAppErrorEvent = (event: CustomEvent) => {
-      if (!isRetrying.value) {
-        const appError = event.detail.error
-        setError(new Error(appError.message))
-      }
-    }
-
-    window.addEventListener('app-error', handleAppErrorEvent)
-
     onUnmounted(() => {
       removeListeners()
-      window.removeEventListener('app-error', handleAppErrorEvent)
     })
   })
 

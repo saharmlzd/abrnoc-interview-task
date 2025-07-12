@@ -98,17 +98,10 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'ComponentName',
-  components: {
-    // Component imports
-  },
-  props: {
-    // Props definition
-  },
+  components: {},
+  props: {},
   setup(props, { emit }) {
-    // Composition API logic
-    return {
-      // Return reactive data and methods
-    }
+    return {}
   },
 })
 </script>
@@ -151,10 +144,9 @@ props: {
 ### 2. Import/Export Rules
 
 ```typescript
-// Group imports by type
-import { defineComponent, computed } from 'vue' // Vue imports
-import type { Product } from '../types/cart-store' // Type imports
-import ProductCard from './ProductCard.vue' // Component imports
+import { defineComponent, computed } from 'vue'
+import type { Product } from '../types/cart-store'
+import ProductCard from './ProductCard.vue'
 ```
 
 ### 3. Error Handling
@@ -205,15 +197,12 @@ src/
 ### 2. Variables and Functions
 
 ```typescript
-// Variables
 const productList = ref([])
 const isLoading = ref(false)
 
-// Functions
 const fetchProducts = async () => {}
 const handleAddToCart = (product: Product) => {}
 
-// Constants
 const API_BASE_URL = 'https://api.example.com'
 const MAX_ITEMS_PER_PAGE = 20
 ```
@@ -297,9 +286,7 @@ const MAX_ITEMS_PER_PAGE = 20
  * @param limit - Number of items per page
  * @returns Promise<Product[]>
  */
-const fetchProducts = async (page: number, limit: number): Promise<Product[]> => {
-  // Implementation
-}
+const fetchProducts = async (page: number, limit: number): Promise<Product[]> => {}
 ```
 
 ### 2. Component Documentation
