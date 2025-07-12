@@ -7,7 +7,14 @@ export const handleGlobalError = (isRetrying: boolean, setError: (error: Error) 
 }
 
 export const handleAppError = (
-  event: CustomEvent,
+  event: CustomEvent<{
+    error: {
+      type: string
+      message: string
+      originalError?: Error
+      context?: string
+    }
+  }>,
   isRetrying: boolean,
   setError: (error: Error) => void
 ) => {
@@ -28,16 +35,26 @@ export const handleNavigationError = (
 }
 
 export const setupErrorListeners = (setError: (error: Error) => void, isRetrying: boolean) => {
-  const handleAppErrorEvent = (event: CustomEvent) => handleAppError(event, isRetrying, setError)
+  const handleAppErrorEvent = (
+    event: CustomEvent<{
+      error: {
+        type: string
+        message: string
+        originalError?: Error
+        context?: string
+      }
+    }>
+  ) => handleAppError(event, isRetrying, setError)
+
   const handleNavigationErrorEvent = (event: ErrorEvent) =>
     handleNavigationError(event, isRetrying, setError)
 
-  window.addEventListener('app-error', handleAppErrorEvent as EventListener)
+  window.addEventListener('app-error', handleAppErrorEvent)
   window.addEventListener('error', handleNavigationErrorEvent)
 
   return {
     removeListeners: () => {
-      window.removeEventListener('app-error', handleAppErrorEvent as EventListener)
+      window.removeEventListener('app-error', handleAppErrorEvent)
       window.removeEventListener('error', handleNavigationErrorEvent)
     },
   }
